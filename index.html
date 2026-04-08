@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gulab — Handcrafted Indian Jewelry in Nederland</title>
+  <meta name="description" content="Curated handcrafted jewelry from India. Bangles, necklaces, and gold-plated pieces — available in the Netherlands.">
+  <meta property="og:title" content="Gulab — Handcrafted Indian Jewelry">
+  <meta property="og:description" content="Curated handcrafted jewelry from India, available in Nederland.">
+  <meta property="og:type" content="website">
+  <link rel="canonical" href="https://gulabcurates.com">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+
+  <style>
+    /* =====================
+       DESIGN TOKENS
+    ===================== */
+    :root {
+      --bg:           #1C1410;
+      --bg-card:      #261C17;
+      --bg-section:   #211812;
+      --text:         #F5EDE0;
+      --text-muted:   rgba(245, 237, 224, 0.55);
+      --text-dim:     rgba(245, 237, 224, 0.32);
+      --accent:       #C9763D;
+      --accent-hover: #D9834A;
+      --gold:         #C9A16B;
+      --border:       rgba(201, 118, 61, 0.15);
+      --border-gold:  rgba(201, 161, 107, 0.22);
+      --serif:        "Cormorant Garamond", Georgia, serif;
+      --sans:         "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      --ease:         0.3s ease;
+      --radius:       2px;
+    }
+
+    /* =====================
+       RESET & BASE
+    ===================== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; }
+    button { cursor: pointer; border: none; background: none; font-family: inherit; }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* =====================
+       NAVIGATION
+    ===================== */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3.5rem);
+      transition: background var(--ease), backdrop-filter var(--ease);
+    }
+    .nav.scrolled {
+      background: rgba(28, 20, 16, 0.94);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+
+    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
+    .nav-logo-main {
+      font-family: var(--serif);
+      font-size: clamp(1.35rem, 2.5vw, 1.65rem);
+      font-weight: 400;
+      letter-spacing: 0.07em;
+      color: var(--text);
+      transition: opacity var(--ease);
+    }
+    .nav-logo-sub {
+      font-family: var(--serif);
+      font-size: 0.62rem;
+      letter-spacing: 0.22em;
+      color: var(--gold);
+      opacity: 0.75;
+      margin-top: 2px;
+    }
+    .nav-logo:hover .nav-logo-main { opacity: 0.75; }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: clamp(1.5rem, 3.5vw, 2.5rem);
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--ease);
+    }
+    .nav-links a:hover { color: var(--text); }
+    .nav-cta {
+      color: var(--accent) !important;
+      border: 1px solid var(--accent);
+      padding: 0.45rem 0.9rem;
+      border-radius: var(--radius);
+      transition: background var(--ease), color var(--ease) !important;
+    }
+    .nav-cta:hover { background: var(--accent); color: var(--bg) !important; }
+
+    /* Hamburger */
+    .nav-toggle {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      padding: 4px;
+      z-index: 200;
+    }
+    .nav-toggle span {
+      display: block;
+      width: 22px;
+      height: 1.5px;
+      background: var(--text);
+      transition: transform var(--ease), opacity var(--ease);
+    }
+    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2) { opacity: 0; }
+    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+    /* Mobile overlay */
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: var(--bg);
+      z-index: 150;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 2rem;
+    }
+    .nav-mobile.open { display: flex; }
+    .nav-mobile a {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 7vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+      transition: color var(--ease);
+    }
+    .nav-mobile a:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .nav-toggle { display: flex; }
+    }
+
+    /* =====================
+       HERO
+    ===================== */
+    .hero {
+      position: relative;
+      height: 100dvh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('assets/images/hero-dancer.jpg');
+      background-size: cover;
+      background-position: center 20%;
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(28, 20, 16, 0.18) 0%,
+        rgba(28, 20, 16, 0.08) 30%,
+        rgba(28, 20, 16, 0.55) 62%,
+        rgba(28, 20, 16, 0.93) 100%
+      );
+      z-index: 1;
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      width: 100%;
+      padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 6vw, 5rem) clamp(3.5rem, 9vw, 6rem);
+    }
+    .hero-eyebrow {
+      font-size: clamp(0.58rem, 1.4vw, 0.7rem);
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      animation: fadeUp 0.8s ease 0.2s both;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block;
+      width: 2rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.55;
+    }
+    .hero-title {
+      font-family: var(--serif);
+      font-size: clamp(4.5rem, 13vw, 10rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 0.88;
+      letter-spacing: -0.02em;
+      color: var(--text);
+      margin-bottom: 1.25rem;
+      animation: fadeUp 0.8s ease 0.38s both;
+    }
+    .hero-tagline {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      font-weight: 300;
+      color: var(--text-muted);
+      letter-spacing: 0.04em;
+      max-width: 32ch;
+      line-height: 1.65;
+      margin-bottom: 2.5rem;
+      animation: fadeUp 0.8s ease 0.52s both;
+    }
+    .hero-actions {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      flex-wrap: wrap;
+      animation: fadeUp 0.8s ease 0.65s both;
+    }
+
+    /* Scroll indicator */
+    .hero-scroll {
+      position: absolute;
+      bottom: 2.5rem;
+      right: clamp(1.5rem, 5vw, 3.5rem);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      color: var(--text-dim);
+    }
+    .hero-scroll span {
+      font-size: 0.55rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+    }
+    .hero-scroll-line {
+      width: 1px;
+      height: 2.5rem;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2.2s ease-in-out infinite;
+    }
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.35; transform: scaleY(1); }
+      50% { opacity: 0.75; transform: scaleY(1.15); }
+    }
+
+    /* =====================
+       BUTTONS
+    ===================== */
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.85rem 1.75rem;
+      border-radius: var(--radius);
+      transition: background var(--ease), transform var(--ease);
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      transition: color var(--ease);
+    }
+    .btn-ghost:hover { color: var(--text); }
+    .btn-ghost svg { transition: transform var(--ease); }
+    .btn-ghost:hover svg { transform: translateX(3px); }
+
+    .btn-outline {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text);
+      border: 1px solid var(--border-gold);
+      padding: 0.9rem 2rem;
+      border-radius: var(--radius);
+      transition: border-color var(--ease), color var(--ease), background var(--ease);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      background: rgba(201, 161, 107, 0.06);
+    }
+
+    /* =====================
+       SECTION BASE
+    ===================== */
+    section { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem); }
+
+    .section-eyebrow {
+      font-size: 0.62rem;
+      font-weight: 400;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.65rem;
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+    .section-eyebrow::before {
+      content: '';
+      display: block;
+      width: 1.5rem;
+      height: 1px;
+      background: var(--gold);
+      opacity: 0.45;
+    }
+    .section-heading {
+      font-family: var(--serif);
+      font-size: clamp(2rem, 5vw, 3.5rem);
+      font-weight: 300;
+      font-style: italic;
+      line-height: 1.1;
+      color: var(--text);
+      margin-bottom: 0.9rem;
+    }
+    .section-sub {
+      font-size: clamp(0.85rem, 2vw, 0.93rem);
+      color: var(--text-muted);
+      max-width: 52ch;
+      line-height: 1.75;
+    }
+    .divider {
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--border-gold), transparent);
+    }
+
+    /* =====================
+       COLLECTION
+    ===================== */
+    #collection { background: var(--bg-section); }
+
+    .collection-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 1rem;
+      margin-bottom: clamp(2rem, 5vw, 3rem);
+      flex-wrap: wrap;
+    }
+    .collection-note {
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      color: var(--text-dim);
+      text-align: right;
+      line-height: 1.6;
+    }
+    .collection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
+      gap: clamp(0.9rem, 2.5vw, 1.4rem);
+      margin-bottom: 3rem;
+    }
+    .piece-card {
+      display: flex;
+      flex-direction: column;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
+    }
+    .piece-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--border-gold);
+      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+    }
+    .piece-image { aspect-ratio: 1 / 1; overflow: hidden; }
+    .piece-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.55s ease;
+    }
+    .piece-card:hover .piece-image img { transform: scale(1.05); }
+    .piece-info {
+      padding: 1rem 1.25rem 1.35rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      flex: 1;
+    }
+    .piece-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.28em;
+      text-transform: uppercase;
+      color: var(--gold);
+      opacity: 0.75;
+    }
+    .piece-name {
+      font-family: var(--serif);
+      font-size: 1.1rem;
+      font-weight: 400;
+      color: var(--text);
+      line-height: 1.2;
+    }
+    .piece-desc {
+      font-size: 0.77rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+      margin-top: 0.15rem;
+    }
+    .piece-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: 0.8rem;
+      transition: gap var(--ease);
+    }
+    .piece-link:hover { gap: 0.65rem; }
+    .collection-footer { text-align: center; padding-top: 1rem; border-top: 1px solid var(--border); }
+
+    /* =====================
+       HOW TO BUY
+    ===================== */
+    #how { background: var(--bg); }
+    .how-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 1.5rem;
+      margin-top: 3rem;
+    }
+    .how-step {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      padding: 1.75rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color var(--ease);
+    }
+    .how-step:hover { border-color: var(--border-gold); }
+    .how-number {
+      font-family: var(--serif);
+      font-size: 2.8rem;
+      font-weight: 300;
+      color: var(--gold);
+      opacity: 0.28;
+      line-height: 1;
+    }
+    .how-title {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      font-weight: 400;
+      font-style: italic;
+      color: var(--text);
+    }
+    .how-desc {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.7;
+      flex: 1;
+    }
+    .how-action {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-size: 0.66rem;
+      font-weight: 500;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-top: auto;
+      transition: gap var(--ease);
+    }
+    .how-action:hover { gap: 0.65rem; }
+
+    /* =====================
+       ABOUT
+    ===================== */
+    #about {
+      background: var(--bg-section);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(3rem, 8vw, 6rem);
+      align-items: center;
+    }
+    .about-image-wrap {
+      position: relative;
+      aspect-ratio: 3 / 4;
+      overflow: hidden;
+      border-radius: var(--radius);
+    }
+    .about-image-wrap img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: top center;
+    }
+    .about-image-wrap::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid var(--border-gold);
+      pointer-events: none;
+    }
+    .about-content { display: flex; flex-direction: column; gap: 1.1rem; }
+    .about-body {
+      font-size: clamp(0.87rem, 2vw, 0.93rem);
+      color: var(--text-muted);
+      line-height: 1.85;
+    }
+    .about-signature {
+      font-family: var(--serif);
+      font-size: 1.55rem;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--gold);
+      margin-top: 0.3rem;
+    }
+    .about-instagram {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.68rem;
+      font-weight: 400;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color var(--ease);
+      margin-top: 0.3rem;
+    }
+    .about-instagram:hover { color: var(--text); }
+
+    @media (max-width: 768px) {
+      #about {
+        grid-template-columns: 1fr;
+        padding-left: clamp(1.5rem, 6vw, 5rem);
+        padding-right: clamp(1.5rem, 6vw, 5rem);
+      }
+      .about-image-wrap { aspect-ratio: 4 / 3; max-height: 340px; }
+    }
+
+    /* =====================
+       CONTACT
+    ===================== */
+    #contact { background: var(--bg); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2.5rem, 7vw, 5rem);
+      margin-top: 3rem;
+      align-items: start;
+    }
+    .contact-channels { display: flex; flex-direction: column; gap: 1rem; }
+    .contact-channel {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      padding: 1.15rem 1.35rem;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      transition: border-color var(--ease), background var(--ease);
+    }
+    .contact-channel:hover {
+      border-color: var(--border-gold);
+      background: rgba(201, 161, 107, 0.04);
+    }
+    .contact-icon {
+      width: 2.4rem;
+      height: 2.4rem;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .contact-icon.whatsapp  { background: rgba(37, 211, 102, 0.1);  color: #25D366; }
+    .contact-icon.instagram { background: rgba(201, 118, 61, 0.1);  color: var(--accent); }
+    .contact-icon.vinted    { background: rgba(201, 161, 107, 0.1); color: var(--gold); }
+    .contact-channel-info { flex: 1; }
+    .contact-channel-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      margin-bottom: 0.15rem;
+    }
+    .contact-channel-value {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--text);
+    }
+    .contact-arrow { color: var(--text-dim); transition: color var(--ease), transform var(--ease); }
+    .contact-channel:hover .contact-arrow { color: var(--gold); transform: translateX(3px); }
+
+    /* Form */
+    .contact-form { display: flex; flex-direction: column; gap: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+    }
+    .form-input, .form-textarea {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 0.88rem;
+      font-weight: 300;
+      padding: 0.8rem 1rem;
+      width: 100%;
+      transition: border-color var(--ease);
+      outline: none;
+    }
+    .form-input::placeholder, .form-textarea::placeholder { color: var(--text-dim); }
+    .form-input:focus, .form-textarea:focus { border-color: var(--gold); }
+    .form-textarea { resize: vertical; min-height: 120px; }
+    .form-submit {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.6rem;
+      font-size: 0.7rem;
+      font-weight: 500;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--bg);
+      background: var(--accent);
+      padding: 0.9rem 1.5rem;
+      border-radius: var(--radius);
+      border: none;
+      font-family: var(--sans);
+      cursor: pointer;
+      transition: background var(--ease);
+    }
+    .form-submit:hover { background: var(--accent-hover); }
+
+    @media (max-width: 768px) {
+      .contact-grid { grid-template-columns: 1fr; }
+    }
+
+    /* =====================
+       FOOTER
+    ===================== */
+    .footer {
+      background: var(--bg-section);
+      border-top: 1px solid var(--border);
+      padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 6vw, 5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.25rem;
+      flex-wrap: wrap;
+    }
+    .footer-brand {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 300;
+      font-style: italic;
+      color: var(--text-muted);
+    }
+    .footer-links { display: flex; align-items: center; gap: 1.5rem; }
+    .footer-links a {
+      font-size: 0.63rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--text-dim);
+      transition: color var(--ease);
+    }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-meta {
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      letter-spacing: 0.04em;
+      text-align: right;
+      line-height: 1.55;
+    }
+
+    /* =====================
+       ANIMATIONS
+    ===================== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="#" class="nav-logo" aria-label="Gulab — home">
+      <span class="nav-logo-main">Gulab</span>
+      <span class="nav-logo-sub">गुलाब</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="#collection">Collection</a></li>
+      <li><a href="#how">How to buy</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <!-- Mobile overlay -->
+  <div class="nav-mobile" id="navMobile" role="dialog" aria-label="Navigation menu">
+    <a href="#collection">Collection</a>
+    <a href="#how">How to buy</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </div>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home" aria-label="Hero">
+      <div class="hero-bg" role="img" aria-label="Indian dancer adorned in traditional gold jewelry"></div>
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <p class="hero-eyebrow">Handcrafted Indian Jewelry</p>
+        <h1 class="hero-title">Gulab</h1>
+        <p class="hero-tagline">Handpicked from India.<br>Worn in Nederland.</p>
+        <div class="hero-actions">
+          <a href="#collection" class="btn-primary">
+            Discover the collection
+            <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+              <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+          <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="btn-ghost">
+            View on Vinted
+            <svg width="12" height="9" viewBox="0 0 12 9" fill="none" aria-hidden="true">
+              <path d="M1 4.5h10M7 1l4 3.5L7 8" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <div class="hero-scroll-line"></div>
+        <span>Scroll</span>
+      </div>
+    </section>
+
+    <!-- COLLECTION -->
+    <section id="collection" aria-labelledby="collection-heading">
+      <div class="collection-header">
+        <div>
+          <p class="section-eyebrow">Current pieces</p>
+          <h2 class="section-heading" id="collection-heading">The collection</h2>
+          <p class="section-sub">Each piece is handpicked directly from artisans in India — limited quantities, always rotating.</p>
+        </div>
+        <p class="collection-note">Updated regularly<br>Available on Vinted</p>
+      </div>
+
+      <div class="collection-grid">
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/bangles-gold.jpg" alt="Gold stacking bangles" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Bangles</span>
+            <h3 class="piece-name">Gold Stacking Bangles</h3>
+            <p class="piece-desc">Classic 916 gold-plated bangles. Stack them, layer them, wear one — they work every way.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/bangles-4.jpg" alt="Set of four festive gold bangles" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Bangles</span>
+            <h3 class="piece-name">Festive Bangle Set</h3>
+            <p class="piece-desc">A curated set of four gold-plated bangles — perfect for festive occasions or everyday elegance.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/bangle-single.jpg" alt="Wide temple gold bangle" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Bangles</span>
+            <h3 class="piece-name">Temple Gold Bangle</h3>
+            <p class="piece-desc">A wide, statement bangle in traditional temple gold style. Substantial, beautiful, timeless.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/necklace-arya.jpg" alt="Traditional gold necklace with rubies and emeralds" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Necklaces</span>
+            <h3 class="piece-name">Arya Gold Necklace</h3>
+            <p class="piece-desc">Intricate gold with rubies and emeralds in the grand Indian tradition. A true heirloom piece.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/earrings-gold.jpg" alt="Gold earrings with pearls from northern India" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Earrings</span>
+            <h3 class="piece-name">Pearl & Gold Earrings</h3>
+            <p class="piece-desc">Delicate northern Indian gold earrings with freshwater pearls. Light enough for all day, beautiful enough for any occasion.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+        <article class="piece-card">
+          <div class="piece-image">
+            <img src="assets/images/collection/necklace-thanjavur.jpg" alt="Thanjavur heritage gold necklace with rubies and emeralds" loading="lazy">
+          </div>
+          <div class="piece-info">
+            <span class="piece-label">Necklaces</span>
+            <h3 class="piece-name">Thanjavur Heritage Necklace</h3>
+            <p class="piece-desc">From the heart of Tamil Nadu — gold, pearls, and rubies in the grand Thanjavur tradition.</p>
+            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="piece-link">
+              View on Vinted
+              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+                <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+            </a>
+          </div>
+        </article>
+
+      </div>
+
+      <div class="collection-footer">
+        <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="btn-outline">
+          Browse the full shop on Vinted
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- HOW TO BUY -->
+    <section id="how" aria-labelledby="how-heading">
+      <p class="section-eyebrow">Simple process</p>
+      <h2 class="section-heading" id="how-heading">How to buy</h2>
+      <p class="section-sub">No complicated checkout. Find a piece you love and reach out — Roos handles the rest.</p>
+
+      <div class="how-grid">
+
+        <div class="how-step">
+          <div class="how-number">01</div>
+          <h3 class="how-title">Browse the collection</h3>
+          <p class="how-desc">Explore current pieces here or directly on Vinted. The collection changes regularly as new pieces arrive from India.</p>
+          <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="how-action">
+            Visit Vinted shop
+            <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+              <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="how-step">
+          <div class="how-number">02</div>
+          <h3 class="how-title">Reserve your piece</h3>
+          <p class="how-desc">See something you love? Send a WhatsApp or message on Vinted. Roos will hold the piece and answer any questions.</p>
+          <a href="https://wa.me/31614295797" target="_blank" rel="noopener" class="how-action">
+            Message on WhatsApp
+            <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true">
+              <path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+        </div>
+
+        <div class="how-step">
+          <div class="how-number">03</div>
+          <h3 class="how-title">Receive your jewelry</h3>
+          <p class="how-desc">Orders ship within the Netherlands. Each piece is carefully packaged and sent with care. EU shipping coming soon.</p>
+          <span class="how-action" style="color: var(--text-dim); pointer-events: none;">Shipping to NL · EU coming soon</span>
+        </div>
+
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ABOUT -->
+    <section id="about" aria-labelledby="about-heading">
+      <div class="about-image-wrap">
+        <img src="assets/images/hero-dancer2.jpg" alt="Indian dancer wearing traditional gold jewelry" loading="lazy">
+      </div>
+      <div class="about-content">
+        <div>
+          <p class="section-eyebrow">The curator</p>
+          <h2 class="section-heading" id="about-heading">About Roos</h2>
+        </div>
+        <p class="about-body">
+          I'm Roos — and I've always been drawn to things made by hand. There's something about a piece of jewelry that someone crafted with care, that carries the memory of a tradition passed down through generations, that feels completely different from anything mass-produced.
+        </p>
+        <p class="about-body">
+          My connection to India runs deep. I fell in love with the country's craft traditions — the intricate goldwork, the bold bangles, the necklaces that somehow feel ancient and alive at the same time. Gulab is my way of bringing those pieces here to the Netherlands, and sharing something I genuinely love.
+        </p>
+        <p class="about-body">
+          Every piece I carry is one I'd wear myself. I'm selective, I'm honest, and I care about getting it to you safely. This isn't a shop — it's a curation.
+        </p>
+        <p class="about-signature">— Roos</p>
+        <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener" class="about-instagram">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+            <circle cx="12" cy="12" r="4"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+          </svg>
+          Follow the journey on Instagram
+        </a>
+      </div>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- CONTACT -->
+    <section id="contact" aria-labelledby="contact-heading">
+      <p class="section-eyebrow">Get in touch</p>
+      <h2 class="section-heading" id="contact-heading">Reach Roos</h2>
+      <p class="section-sub">Questions about a piece? Want to know when new items arrive? Just want to say hello — all welcome.</p>
+
+      <div class="contact-grid">
+
+        <div class="contact-channels">
+
+          <a href="https://wa.me/31614295797" target="_blank" rel="noopener" class="contact-channel" aria-label="Contact via WhatsApp">
+            <div class="contact-icon whatsapp" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+              </svg>
+            </div>
+            <div class="contact-channel-info">
+              <div class="contact-channel-label">WhatsApp · Fastest response</div>
+              <div class="contact-channel-value">+31 6 14 29 57 97</div>
+            </div>
+            <svg class="contact-arrow" width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+              <path d="M1 4.5h11M7.5 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener" class="contact-channel" aria-label="Follow on Instagram">
+            <div class="contact-icon instagram" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                <circle cx="12" cy="12" r="4"/>
+                <circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/>
+              </svg>
+            </div>
+            <div class="contact-channel-info">
+              <div class="contact-channel-label">Instagram · New arrivals first</div>
+              <div class="contact-channel-value">@lijkesnijer</div>
+            </div>
+            <svg class="contact-arrow" width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+              <path d="M1 4.5h11M7.5 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+          <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="contact-channel" aria-label="Visit the Vinted shop">
+            <div class="contact-icon vinted" aria-hidden="true">
+              <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+                <circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/>
+                <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
+              </svg>
+            </div>
+            <div class="contact-channel-info">
+              <div class="contact-channel-label">Vinted · Browse &amp; buy</div>
+              <div class="contact-channel-value">gulab on Vinted</div>
+            </div>
+            <svg class="contact-arrow" width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+              <path d="M1 4.5h11M7.5 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </a>
+
+        </div>
+
+        <!-- Netlify form -->
+        <form class="contact-form" name="contact" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+          <input type="hidden" name="form-name" value="contact">
+          <p style="display:none"><label>Skip: <input name="bot-field"></label></p>
+          <div class="form-group">
+            <label class="form-label" for="name">Your name</label>
+            <input class="form-input" type="text" id="name" name="name" required placeholder="Naam">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="email">Email</label>
+            <input class="form-input" type="email" id="email" name="email" required placeholder="email@voorbeeld.nl">
+          </div>
+          <div class="form-group">
+            <label class="form-label" for="message">Message</label>
+            <textarea class="form-textarea" id="message" name="message" required placeholder="Tell me what caught your eye, or ask anything…"></textarea>
+          </div>
+          <button class="form-submit" type="submit">
+            Send message
+            <svg width="13" height="9" viewBox="0 0 13 9" fill="none" aria-hidden="true">
+              <path d="M1 4.5h11M7.5 1l4 3.5-4 3.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </form>
+
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="footer-brand">Gulab · गुलाब</div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener">Vinted</a>
+    </div>
+    <div class="footer-meta">© <span id="year"></span> Gulab · Handcrafted Indian Jewelry · Nederland</div>
+  </footer>
+
+  <script>
+    (function () {
+      // Copyright year
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      // Navbar scroll effect
+      var nav = document.getElementById('nav');
+      var ticking = false;
+      window.addEventListener('scroll', function () {
+        if (!ticking) {
+          requestAnimationFrame(function () {
+            nav.classList.toggle('scrolled', window.scrollY > 60);
+            ticking = false;
+          });
+          ticking = true;
+        }
+      }, { passive: true });
+
+      // Mobile menu
+      var toggle   = document.getElementById('navToggle');
+      var mobileMenu = document.getElementById('navMobile');
+
+      function closeMenu() {
+        toggle.classList.remove('open');
+        mobileMenu.classList.remove('open');
+        toggle.setAttribute('aria-expanded', 'false');
+        document.body.style.overflow = '';
+      }
+
+      toggle.addEventListener('click', function () {
+        var isOpen = mobileMenu.classList.toggle('open');
+        toggle.classList.toggle('open', isOpen);
+        toggle.setAttribute('aria-expanded', String(isOpen));
+        document.body.style.overflow = isOpen ? 'hidden' : '';
+      });
+
+      mobileMenu.querySelectorAll('a').forEach(function (link) {
+        link.addEventListener('click', closeMenu);
+      });
+
+      // Smooth scroll for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+        anchor.addEventListener('click', function (e) {
+          var target = document.querySelector(this.getAttribute('href'));
+          if (!target) return;
+          e.preventDefault();
+          closeMenu();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          history.pushState(null, '', this.getAttribute('href'));
+        });
+      });
+    })();
+  </script>
+
+</body>
+</html>
