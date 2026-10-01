@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shop — Gulab</title>
+  <meta name="description" content="Browse Gulab's current pieces — jewellery, textiles and lunchboxes handpicked in India, available in the Netherlands.">
+  <meta name="theme-color" content="#1C1410">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Gulab">
+  <meta property="og:title" content="Gulab — Handpicked from India">
+  <meta property="og:description" content="Jewellery, textiles and lunchboxes, handpicked in India. Available in Nederland.">
+  <meta property="og:image" content="https://mirrrad.github.io/gulab/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://mirrrad.github.io/gulab/assets/og-image.jpg">
+
+  <link rel="icon" href="favicon.ico" sizes="any">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+
+  <link rel="preload" as="fetch" href="assets/data/listings.json" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/site.css">
+</head>
+
+<body class="page-sub">
+
+  <a class="skip-link" href="#listing-section">Skip to the pieces</a>
+
+  <!-- NAVIGATION -->
+  <nav class="nav" id="nav" aria-label="Main navigation">
+    <a href="index.html" class="nav-logo" aria-label="Gulab — home">
+      <span class="nav-logo-main">Gulab</span>
+      <span class="nav-logo-sub" lang="hi">गुलाब</span>
+    </a>
+    <ul class="nav-links" role="list">
+      <li><a href="index.html#collection">Collection</a></li>
+      <li><a href="index.html#how">How to buy</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Contact</a></li>
+    </ul>
+    <button class="nav-toggle" id="navToggle" aria-label="Open menu" aria-expanded="false" aria-controls="navMobile">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="nav-mobile" id="navMobile" aria-label="Navigation menu">
+    <a href="index.html#collection">Collection</a>
+    <a href="index.html#how">How to buy</a>
+    <a href="index.html#about">About</a>
+    <a href="index.html#contact">Contact</a>
+  </div>
+
+  <main>
+    <header class="page-header">
+      <nav class="breadcrumb" aria-label="Breadcrumb">
+        <a href="index.html">Home</a><span aria-hidden="true">/</span>
+        <a href="index.html#collection">Collection</a><span aria-hidden="true">/</span>
+        <span id="catCrumb" aria-current="page">Shop</span>
+      </nav>
+      <p class="section-eyebrow">Shop by category</p>
+      <h1 class="section-heading" id="catName">Shop</h1>
+      <p class="section-sub" id="catBlurb">&nbsp;</p>
+      <nav class="category-tabs" id="catTabs" aria-label="Categories"></nav>
+    </header>
+
+    <section class="listing-section" id="listing-section" aria-labelledby="catName">
+      <div class="collection-grid" id="listing" aria-live="polite"></div>
+
+      <div class="collection-footer">
+        <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="btn-outline">
+          Browse the full shop on Vinted
+          <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
+            <path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <dialog class="item-dialog" id="itemDialog"></dialog>
+
+  <footer class="footer">
+    <div class="footer-brand">Gulab · <span lang="hi">गुलाब</span></div>
+    <div class="footer-links">
+      <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener">Vinted</a>
+    </div>
+    <div class="footer-meta">© <span id="year"></span> Gulab · Handpicked from India · Nederland</div>
+  </footer>
+
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/shop.js" defer></script>
+</body>
+</html>

@@ -1,0 +1,126 @@
+{
+  "_readme": "Single source of truth for categories and listings. Later this can be replaced by a published Google Sheet (CSV) with the same columns. status: available | sold | hidden. images are paths without size suffix/extension; the site loads <path>-600.webp, <path>-1000.webp and <path>.jpg.",
+  "vinted_profile": "https://www.vinted.nl/member/27795555-roos123456",
+  "categories": [
+    {
+      "id": "jewellery",
+      "name": "Jewellery",
+      "blurb": "Bangles, necklaces and earrings — handpicked from artisans and markets across India.",
+      "cover": "assets/images/collection/bangles-gold"
+    },
+    {
+      "id": "textiles",
+      "name": "Textiles",
+      "blurb": "Block prints, scarves and woven pieces. New textiles are on their way from India.",
+      "cover": "assets/images/covers/textiles"
+    },
+    {
+      "id": "lunchboxes",
+      "name": "Lunchboxes",
+      "blurb": "Classic Indian stainless steel tiffins — built to last a lifetime, plastic-free.",
+      "cover": "assets/images/lunchboxes/neelam-1"
+    }
+  ],
+  "items": [
+    {
+      "id": "neelam-tiffin-2-tier",
+      "category": "lunchboxes",
+      "title": "Neelam Two-Tier Steel Tiffin",
+      "price": 25,
+      "price_note": "each",
+      "description": "A classic Indian stainless steel tiffin by Neelam (since 1972). Two stacking compartments, a lid with a fold-down carry handle, and a clip that locks all three together. Plastic-free, dishwasher-friendly steel, sized for one good lunch. Several available.",
+      "images": [
+        "assets/images/lunchboxes/neelam-1",
+        "assets/images/lunchboxes/neelam-2",
+        "assets/images/lunchboxes/neelam-3",
+        "assets/images/lunchboxes/neelam-4",
+        "assets/images/lunchboxes/neelam-5",
+        "assets/images/lunchboxes/neelam-6",
+        "assets/images/lunchboxes/neelam-7"
+      ],
+      "image_alts": [
+        "Closed two-tier steel tiffin with clip lock, on a windowsill",
+        "Tiffin taken apart: bottom container, top tier and lid",
+        "Tiffin parts seen from the side",
+        "Tiffin held in hand showing the clip lock and Neelam label",
+        "Side view of the tiffin with the Neelam label",
+        "Lid from above with the fold-down carry handle",
+        "Tiffin next to a hand for size"
+      ],
+      "vinted": "",
+      "status": "available"
+    },
+    {
+      "id": "gold-stacking-bangles",
+      "category": "jewellery",
+      "title": "Gold Stacking Bangles",
+      "price": null,
+      "description": "Gold-tone stacking bangles. Stack them, layer them, wear one — they work every way.",
+      "images": ["assets/images/collection/bangles-gold"],
+      "image_alts": ["Gold stacking bangles"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    },
+    {
+      "id": "festive-bangle-set",
+      "category": "jewellery",
+      "title": "Festive Bangle Set",
+      "price": null,
+      "description": "A set of four gold-tone bangles — for festive occasions or everyday.",
+      "images": ["assets/images/collection/bangles-4"],
+      "image_alts": ["Set of four gold-tone bangles"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    },
+    {
+      "id": "temple-bangle",
+      "category": "jewellery",
+      "title": "Temple-Style Bangle",
+      "price": null,
+      "description": "A wide statement bangle in the traditional temple style.",
+      "images": ["assets/images/collection/bangle-single"],
+      "image_alts": ["Wide temple-style bangle"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    },
+    {
+      "id": "arya-necklace",
+      "category": "jewellery",
+      "title": "Arya Necklace",
+      "price": null,
+      "description": "An intricate statement necklace in the grand Indian tradition.",
+      "images": ["assets/images/collection/necklace-arya"],
+      "image_alts": ["Traditional Indian statement necklace"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    },
+    {
+      "id": "pearl-earrings",
+      "category": "jewellery",
+      "title": "Pearl Drop Earrings",
+      "price": null,
+      "description": "Delicate northern Indian-style earrings with pearl drops.",
+      "images": ["assets/images/collection/earrings-gold"],
+      "image_alts": ["Earrings with pearl drops"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    },
+    {
+      "id": "thanjavur-necklace",
+      "category": "jewellery",
+      "title": "Thanjavur-Style Necklace",
+      "price": null,
+      "description": "A heritage-style necklace inspired by the Thanjavur tradition of Tamil Nadu.",
+      "images": ["assets/images/collection/necklace-thanjavur"],
+      "image_alts": ["Thanjavur-style necklace"],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true
+    }
+  ]
+}

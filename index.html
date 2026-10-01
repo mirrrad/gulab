@@ -3,15 +3,15 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gulab — Handcrafted Indian Jewelry in Nederland</title>
-  <meta name="description" content="Curated handcrafted jewelry from India. Bangles, necklaces, and gold-plated pieces — available in the Netherlands.">
+  <title>Gulab — Handpicked from India, in Nederland</title>
+  <meta name="description" content="Jewellery, textiles and steel lunchboxes, handpicked in India by Roos and available in the Netherlands.">
   <meta name="theme-color" content="#1C1410">
 
   <!-- Social sharing -->
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Gulab">
-  <meta property="og:title" content="Gulab — Handcrafted Indian Jewelry">
-  <meta property="og:description" content="Curated handcrafted jewelry from India, available in Nederland.">
+  <meta property="og:title" content="Gulab — Handpicked from India">
+  <meta property="og:description" content="Jewellery, textiles and lunchboxes, handpicked in India. Available in Nederland.">
   <meta property="og:url" content="https://mirrrad.github.io/gulab/">
   <meta property="og:image" content="https://mirrrad.github.io/gulab/assets/og-image.jpg">
   <meta property="og:image:width" content="1200">
@@ -19,8 +19,8 @@
   <meta property="og:image:alt" content="Gulab — Handpicked from India. Worn in Nederland.">
   <meta property="og:locale" content="en_GB">
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Gulab — Handcrafted Indian Jewelry">
-  <meta name="twitter:description" content="Curated handcrafted jewelry from India, available in Nederland.">
+  <meta name="twitter:title" content="Gulab — Handpicked from India">
+  <meta name="twitter:description" content="Jewellery, textiles and lunchboxes, handpicked in India. Available in Nederland.">
   <meta name="twitter:image" content="https://mirrrad.github.io/gulab/assets/og-image.jpg">
 
   <!-- Icons -->
@@ -37,7 +37,7 @@
     "alternateName": "गुलाब",
     "url": "https://mirrrad.github.io/gulab/",
     "logo": "https://mirrrad.github.io/gulab/assets/icon-512.png",
-    "description": "Curated handcrafted jewelry from India, available in the Netherlands.",
+    "description": "Jewellery, textiles and lunchboxes handpicked in India, available in the Netherlands.",
     "areaServed": "NL",
     "sameAs": [
       "https://www.instagram.com/lijkesnijer",
@@ -56,699 +56,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
 
-  <style>
-    /* =====================
-       DESIGN TOKENS
-    ===================== */
-    :root {
-      --bg:           #1C1410;
-      --bg-card:      #261C17;
-      --bg-section:   #211812;
-      --cream:        #F5EDE0;
-      --text:         #F5EDE0;
-      --text-muted:   rgba(245, 237, 224, 0.72);  /* ~9:1 on --bg */
-      --text-dim:     rgba(245, 237, 224, 0.55);  /* ~5.2:1 — AA for small text */
-      --accent:       #C9763D;
-      --accent-hover: #D9834A;
-      --on-accent:    #1C1410;
-      --gold:         #C9A16B;
-      --border:       rgba(201, 118, 61, 0.15);
-      --border-gold:  rgba(201, 161, 107, 0.22);
-      --focus:        #C9A16B;
-      --serif:        "Cormorant Garamond", Georgia, serif;
-      --sans:         "Inter", -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
-      --ease:         0.3s ease;
-      --radius:       2px;
-      --label:        0.75rem;  /* smallest UI text size (12px) */
-    }
-
-    /* =====================
-       RESET & BASE
-    ===================== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; }
-    body {
-      background: var(--bg);
-      color: var(--text);
-      font-family: var(--sans);
-      font-weight: 300;
-      line-height: 1.7;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-    img { display: block; max-width: 100%; height: auto; }
-    a { color: inherit; text-decoration: none; }
-    button { cursor: pointer; border: none; background: none; font-family: inherit; color: inherit; }
-
-    :focus-visible {
-      outline: 2px solid var(--focus);
-      outline-offset: 3px;
-      border-radius: var(--radius);
-    }
-
-    .skip-link {
-      position: absolute;
-      left: 1rem;
-      top: -4rem;
-      z-index: 300;
-      background: var(--cream);
-      color: var(--bg);
-      padding: 0.6rem 1rem;
-      font-size: var(--label);
-      font-weight: 500;
-    }
-    .skip-link:focus { top: 1rem; }
-
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-      html { scroll-behavior: auto; }
-    }
-
-    /* =====================
-       NAVIGATION
-    ===================== */
-    .nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: clamp(1rem, 2.5vw, 1.5rem) clamp(1.5rem, 5vw, 3.5rem);
-      transition: background var(--ease), backdrop-filter var(--ease);
-    }
-    .nav.scrolled {
-      background: rgba(28, 20, 16, 0.94);
-      backdrop-filter: blur(14px);
-      -webkit-backdrop-filter: blur(14px);
-    }
-
-    .nav-logo { display: flex; flex-direction: column; line-height: 1; }
-    .nav-logo-main {
-      font-family: var(--serif);
-      font-size: clamp(1.35rem, 2.5vw, 1.65rem);
-      font-weight: 400;
-      letter-spacing: 0.07em;
-      color: var(--text);
-      transition: opacity var(--ease);
-    }
-    .nav-logo-sub {
-      font-family: var(--serif);
-      font-size: 0.75rem;
-      letter-spacing: 0.22em;
-      color: var(--gold);
-      margin-top: 2px;
-    }
-    .nav-logo:hover .nav-logo-main { opacity: 0.75; }
-
-    .nav-links {
-      display: flex;
-      align-items: center;
-      gap: clamp(1.5rem, 3.5vw, 2.5rem);
-      list-style: none;
-    }
-    .nav-links a {
-      font-size: var(--label);
-      font-weight: 400;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color var(--ease), background var(--ease);
-    }
-    .nav-links a:hover { color: var(--text); }
-    .nav-links .nav-cta {
-      color: var(--accent);
-      border: 1px solid var(--accent);
-      padding: 0.45rem 0.9rem;
-      border-radius: var(--radius);
-    }
-    .nav-links .nav-cta:hover { background: var(--accent); color: var(--on-accent); }
-
-    /* Hamburger */
-    .nav-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 5px;
-      padding: 10px;
-      margin-right: -10px;
-    }
-    .nav-toggle span {
-      display: block;
-      width: 22px;
-      height: 1.5px;
-      background: var(--text);
-      transition: transform var(--ease), opacity var(--ease);
-    }
-    .nav-toggle.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
-    .nav-toggle.open span:nth-child(2) { opacity: 0; }
-    .nav-toggle.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
-
-    /* Mobile overlay — sits BELOW the nav bar (z 100) so the logo and close button stay visible and tappable */
-    .nav-mobile {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: var(--bg);
-      z-index: 90;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 2rem;
-    }
-    .nav-mobile.open { display: flex; }
-    .nav-mobile a {
-      font-family: var(--serif);
-      font-size: clamp(2.2rem, 7vw, 3.5rem);
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text-muted);
-      transition: color var(--ease);
-    }
-    .nav-mobile a:hover { color: var(--text); }
-
-    @media (max-width: 768px) {
-      .nav-links { display: none; }
-      .nav-toggle { display: flex; }
-    }
-
-    /* =====================
-       HERO
-    ===================== */
-    .hero {
-      position: relative;
-      height: 100dvh;
-      min-height: 600px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-    }
-    .hero-bg,
-    .hero-bg img {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: center 20%;
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(28, 20, 16, 0.18) 0%,
-        rgba(28, 20, 16, 0.08) 30%,
-        rgba(28, 20, 16, 0.55) 62%,
-        rgba(28, 20, 16, 0.93) 100%
-      );
-      z-index: 1;
-    }
-    .hero-content {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: clamp(2rem, 6vw, 4rem) clamp(1.5rem, 6vw, 5rem) clamp(3.5rem, 9vw, 6rem);
-    }
-    .hero-eyebrow {
-      font-size: var(--label);
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      animation: fadeUp 0.8s ease 0.2s both;
-    }
-    .hero-eyebrow::before {
-      content: '';
-      display: block;
-      width: 2rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.55;
-    }
-    .hero-title {
-      font-family: var(--serif);
-      font-size: clamp(4.5rem, 13vw, 10rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 0.88;
-      letter-spacing: -0.02em;
-      color: var(--text);
-      margin-bottom: 1.25rem;
-      animation: fadeUp 0.8s ease 0.38s both;
-    }
-    .hero-tagline {
-      font-size: clamp(0.95rem, 2vw, 1.05rem);
-      font-weight: 300;
-      color: var(--text-muted);
-      letter-spacing: 0.04em;
-      max-width: 32ch;
-      line-height: 1.65;
-      margin-bottom: 2.5rem;
-      animation: fadeUp 0.8s ease 0.52s both;
-    }
-    .hero-actions {
-      display: flex;
-      align-items: center;
-      gap: 1.5rem;
-      flex-wrap: wrap;
-      animation: fadeUp 0.8s ease 0.65s both;
-    }
-
-    /* Scroll indicator (decorative) */
-    .hero-scroll {
-      position: absolute;
-      bottom: 2.5rem;
-      right: clamp(1.5rem, 5vw, 3.5rem);
-      z-index: 2;
-      width: 1px;
-      height: 3rem;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2.2s ease-in-out infinite;
-    }
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.35; transform: scaleY(1); }
-      50% { opacity: 0.75; transform: scaleY(1.15); }
-    }
-
-    /* =====================
-       BUTTONS
-    ===================== */
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: var(--label);
-      font-weight: 500;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--on-accent);
-      background: var(--accent);
-      padding: 0.9rem 1.75rem;
-      border-radius: var(--radius);
-      transition: background var(--ease), transform var(--ease);
-    }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: var(--label);
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      padding: 0.9rem 0;
-      transition: color var(--ease);
-    }
-    .btn-ghost:hover { color: var(--text); }
-    .btn-ghost svg { transition: transform var(--ease); }
-    .btn-ghost:hover svg { transform: translateX(3px); }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.6rem;
-      font-size: var(--label);
-      font-weight: 500;
-      letter-spacing: 0.16em;
-      text-transform: uppercase;
-      color: var(--text);
-      border: 1px solid var(--border-gold);
-      padding: 0.9rem 2rem;
-      border-radius: var(--radius);
-      transition: border-color var(--ease), color var(--ease), background var(--ease);
-    }
-    .btn-outline:hover {
-      border-color: var(--gold);
-      color: var(--gold);
-      background: rgba(201, 161, 107, 0.06);
-    }
-
-    /* Arrow-style text links (cards, steps) */
-    .text-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.4rem;
-      font-size: var(--label);
-      font-weight: 500;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--accent);
-      transition: gap var(--ease);
-    }
-    .text-link:hover { gap: 0.65rem; }
-
-    /* =====================
-       SECTION BASE
-    ===================== */
-    section { padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 6vw, 5rem); }
-
-    .section-eyebrow {
-      font-size: var(--label);
-      font-weight: 400;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--gold);
-      margin-bottom: 0.65rem;
-      display: flex;
-      align-items: center;
-      gap: 0.7rem;
-    }
-    .section-eyebrow::before {
-      content: '';
-      display: block;
-      width: 1.5rem;
-      height: 1px;
-      background: var(--gold);
-      opacity: 0.45;
-    }
-    .section-heading {
-      font-family: var(--serif);
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 300;
-      font-style: italic;
-      line-height: 1.1;
-      color: var(--text);
-      margin-bottom: 0.9rem;
-    }
-    .section-sub {
-      font-size: clamp(0.92rem, 2vw, 1rem);
-      color: var(--text-muted);
-      max-width: 52ch;
-      line-height: 1.75;
-    }
-    .divider {
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--border-gold), transparent);
-    }
-
-    /* Light section — re-scopes the tokens so every component inside flips to dark-on-cream */
-    .section-light {
-      --text:        #1C1410;
-      --text-muted:  rgba(28, 20, 16, 0.72);  /* ~6.7:1 on cream */
-      --text-dim:    rgba(28, 20, 16, 0.62);  /* ~4.8:1 on cream */
-      --accent:      #9A4E1E;                 /* darker saffron — 5.2:1 on cream */
-      --accent-hover:#7F3F17;
-      --gold:        #8A6430;                 /* 4.6:1 on cream */
-      --border:      rgba(28, 20, 16, 0.12);
-      --border-gold: rgba(138, 100, 48, 0.4);
-      --focus:       #9A4E1E;
-      background: var(--cream);
-      color: var(--text);
-    }
-
-    /* =====================
-       COLLECTION
-    ===================== */
-    #collection { background: var(--bg-section); }
-
-    .collection-header { margin-bottom: clamp(2rem, 5vw, 3rem); }
-    .collection-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(min(100%, 270px), 1fr));
-      gap: clamp(0.9rem, 2.5vw, 1.4rem);
-      margin-bottom: 3rem;
-    }
-    .piece-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      overflow: hidden;
-      transition: transform var(--ease), border-color var(--ease), box-shadow var(--ease);
-    }
-    .piece-card:hover,
-    .piece-card:focus-within {
-      transform: translateY(-5px);
-      border-color: var(--border-gold);
-      box-shadow: 0 20px 50px rgba(0,0,0,0.45);
-    }
-    .piece-image { aspect-ratio: 1 / 1; overflow: hidden; }
-    .piece-image img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.55s ease;
-    }
-    .piece-card:hover .piece-image img { transform: scale(1.05); }
-    .piece-info {
-      padding: 1.1rem 1.25rem 1.4rem;
-      display: flex;
-      flex-direction: column;
-      gap: 0.3rem;
-      flex: 1;
-    }
-    .piece-label {
-      font-size: var(--label);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--gold);
-    }
-    .piece-name {
-      font-family: var(--serif);
-      font-size: 1.3rem;
-      font-weight: 400;
-      color: var(--text);
-      line-height: 1.2;
-    }
-    .piece-desc {
-      font-size: 0.875rem;
-      color: var(--text-muted);
-      line-height: 1.6;
-      flex: 1;
-      margin-top: 0.15rem;
-    }
-    .piece-card .text-link { margin-top: 0.8rem; align-self: flex-start; }
-    /* Stretch the card's link over the whole card so any tap opens it */
-    .piece-card .text-link::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      z-index: 1;
-    }
-    .piece-card .text-link:focus-visible { outline: none; }
-    .piece-card .text-link:focus-visible::after {
-      outline: 2px solid var(--focus);
-      outline-offset: -2px;
-    }
-    .collection-footer { text-align: center; padding-top: 1rem; border-top: 1px solid var(--border); }
-
-    /* =====================
-       HOW TO BUY
-    ===================== */
-    .how-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 1.5rem;
-      margin-top: 3rem;
-    }
-    .how-step {
-      display: flex;
-      flex-direction: column;
-      gap: 0.9rem;
-      padding: 1.75rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      background: rgba(255, 255, 255, 0.35);
-      transition: border-color var(--ease);
-    }
-    .how-step:hover { border-color: var(--border-gold); }
-    .how-number {
-      font-family: var(--serif);
-      font-size: 2.8rem;
-      font-weight: 300;
-      color: var(--gold);
-      opacity: 0.45;
-      line-height: 1;
-    }
-    .how-title {
-      font-family: var(--serif);
-      font-size: 1.4rem;
-      font-weight: 400;
-      font-style: italic;
-      color: var(--text);
-    }
-    .how-desc {
-      font-size: 0.9rem;
-      color: var(--text-muted);
-      line-height: 1.7;
-      flex: 1;
-    }
-    .how-step .text-link { margin-top: auto; }
-    .how-note {
-      margin-top: auto;
-      font-size: var(--label);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-    }
-
-    /* =====================
-       ABOUT
-    ===================== */
-    #about {
-      background: var(--bg-section);
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: clamp(3rem, 8vw, 6rem);
-      align-items: center;
-    }
-    .about-image-wrap {
-      position: relative;
-      aspect-ratio: 3 / 4;
-      overflow: hidden;
-      border-radius: var(--radius);
-    }
-    .about-image-wrap img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      object-position: top center;
-    }
-    .about-image-wrap::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border: 1px solid var(--border-gold);
-      pointer-events: none;
-    }
-    .about-content { display: flex; flex-direction: column; gap: 1.1rem; }
-    .about-body {
-      font-size: clamp(0.95rem, 2vw, 1rem);
-      color: var(--text-muted);
-      line-height: 1.85;
-    }
-    .about-signature {
-      font-family: var(--serif);
-      font-size: 1.55rem;
-      font-style: italic;
-      font-weight: 300;
-      color: var(--gold);
-      margin-top: 0.3rem;
-    }
-    .about-instagram {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      font-size: var(--label);
-      font-weight: 400;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      transition: color var(--ease);
-      margin-top: 0.3rem;
-      align-self: flex-start;
-    }
-    .about-instagram:hover { color: var(--text); }
-
-    @media (max-width: 768px) {
-      #about { grid-template-columns: 1fr; }
-      .about-image-wrap { aspect-ratio: 4 / 3; max-height: 340px; }
-    }
-
-    /* =====================
-       CONTACT
-    ===================== */
-    #contact { background: var(--bg); }
-    .contact-channels {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-      gap: 1rem;
-      margin-top: 3rem;
-      max-width: 820px;
-    }
-    .contact-channel {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      padding: 1.25rem 1.4rem;
-      border: 1px solid var(--border);
-      border-radius: var(--radius);
-      transition: border-color var(--ease), background var(--ease);
-    }
-    .contact-channel:hover {
-      border-color: var(--border-gold);
-      background: rgba(201, 161, 107, 0.04);
-    }
-    .contact-icon {
-      width: 2.6rem;
-      height: 2.6rem;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-shrink: 0;
-    }
-    .contact-icon.instagram { background: rgba(201, 118, 61, 0.12); color: var(--accent); }
-    .contact-icon.vinted    { background: rgba(201, 161, 107, 0.12); color: var(--gold); }
-    .contact-channel-info { flex: 1; }
-    .contact-channel-label {
-      font-size: var(--label);
-      color: var(--text-dim);
-      margin-bottom: 0.1rem;
-    }
-    .contact-channel-value {
-      font-family: var(--serif);
-      font-size: 1.15rem;
-      font-weight: 400;
-      color: var(--text);
-    }
-    .contact-arrow { color: var(--text-dim); transition: color var(--ease), transform var(--ease); }
-    .contact-channel:hover .contact-arrow { color: var(--gold); transform: translateX(3px); }
-
-    /* =====================
-       FOOTER
-    ===================== */
-    .footer {
-      background: var(--bg-section);
-      border-top: 1px solid var(--border);
-      padding: clamp(1.75rem, 4vw, 2.5rem) clamp(1.5rem, 6vw, 5rem);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 1.25rem;
-      flex-wrap: wrap;
-    }
-    .footer-brand {
-      font-family: var(--serif);
-      font-size: 1.05rem;
-      font-weight: 300;
-      font-style: italic;
-      color: var(--text-muted);
-    }
-    .footer-links { display: flex; align-items: center; gap: 1.5rem; }
-    .footer-links a {
-      font-size: var(--label);
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--text-dim);
-      transition: color var(--ease);
-    }
-    .footer-links a:hover { color: var(--gold); }
-    .footer-meta {
-      font-size: var(--label);
-      color: var(--text-dim);
-      letter-spacing: 0.04em;
-      line-height: 1.55;
-    }
-
-    /* =====================
-       ANIMATIONS
-    ===================== */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
-    }
-  </style>
+  <link rel="stylesheet" href="assets/css/site.css">
 </head>
 
 <body>
@@ -789,12 +97,12 @@
                 srcset="assets/images/hero-dancer-800.webp 800w, assets/images/hero-dancer-1400.webp 1400w"
                 sizes="100vw">
         <img src="assets/images/hero-dancer.jpg" width="1400" height="994"
-             alt="Close-up of traditional Indian gold and ruby head jewelry"
+             alt="Close-up of traditional Indian gold and ruby head jewellery"
              fetchpriority="high" decoding="async">
       </picture>
       <div class="hero-overlay"></div>
       <div class="hero-content">
-        <p class="hero-eyebrow">Handcrafted Indian Jewelry</p>
+        <p class="hero-eyebrow">Jewellery · Textiles · Lunchboxes</p>
         <h1 class="hero-title">Gulab</h1>
         <p class="hero-tagline">Handpicked from India.<br>Worn in Nederland.</p>
         <div class="hero-actions">
@@ -815,127 +123,51 @@
       <div class="hero-scroll" aria-hidden="true"></div>
     </section>
 
-    <!-- COLLECTION -->
+    <!-- SHOP BY CATEGORY -->
     <section id="collection" aria-labelledby="collection-heading">
       <div class="collection-header">
-        <p class="section-eyebrow">Current pieces</p>
+        <p class="section-eyebrow">Shop by category</p>
         <h2 class="section-heading" id="collection-heading">The collection</h2>
-        <p class="section-sub">Each piece is handpicked directly from artisans in India — limited quantities, always rotating.</p>
+        <p class="section-sub">Each piece is handpicked in India — limited quantities, always rotating.</p>
       </div>
 
-      <div class="collection-grid">
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/bangles-gold-480.webp 480w, assets/images/collection/bangles-gold-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/bangles-gold.jpg" width="800" height="723" alt="Gold stacking bangles" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Bangles</span>
-            <h3 class="piece-name">Gold Stacking Bangles</h3>
-            <p class="piece-desc">Classic 916 gold-plated bangles. Stack them, layer them, wear one — they work every way.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Gold Stacking Bangles on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/bangles-4-480.webp 480w, assets/images/collection/bangles-4-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/bangles-4.jpg" width="800" height="600" alt="Set of four festive gold bangles" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Bangles</span>
-            <h3 class="piece-name">Festive Bangle Set</h3>
-            <p class="piece-desc">A curated set of four gold-plated bangles — perfect for festive occasions or everyday elegance.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Festive Bangle Set on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/bangle-single-480.webp 480w, assets/images/collection/bangle-single-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/bangle-single.jpg" width="800" height="600" alt="Wide temple gold bangle" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Bangles</span>
-            <h3 class="piece-name">Temple Gold Bangle</h3>
-            <p class="piece-desc">A wide, statement bangle in traditional temple gold style. Substantial, beautiful, timeless.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Temple Gold Bangle on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/necklace-arya-480.webp 480w, assets/images/collection/necklace-arya-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/necklace-arya.jpg" width="800" height="734" alt="Traditional gold necklace with rubies and emeralds" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Necklaces</span>
-            <h3 class="piece-name">Arya Gold Necklace</h3>
-            <p class="piece-desc">Intricate gold with rubies and emeralds in the grand Indian tradition. A true heirloom piece.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Arya Gold Necklace on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/earrings-gold-480.webp 480w, assets/images/collection/earrings-gold-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/earrings-gold.jpg" width="641" height="1000" alt="Gold earrings with pearls from northern India" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Earrings</span>
-            <h3 class="piece-name">Pearl &amp; Gold Earrings</h3>
-            <p class="piece-desc">Delicate northern Indian gold earrings with freshwater pearls. Light enough for all day, beautiful enough for any occasion.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Pearl and Gold Earrings on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
-        <article class="piece-card">
-          <div class="piece-image">
-            <picture>
-              <source type="image/webp" srcset="assets/images/collection/necklace-thanjavur-480.webp 480w, assets/images/collection/necklace-thanjavur-800.webp 800w" sizes="(max-width: 640px) 100vw, 400px">
-              <img src="assets/images/collection/necklace-thanjavur.jpg" width="764" height="1000" alt="Thanjavur heritage gold necklace with rubies and pearls" loading="lazy" decoding="async">
-            </picture>
-          </div>
-          <div class="piece-info">
-            <span class="piece-label">Necklaces</span>
-            <h3 class="piece-name">Thanjavur Heritage Necklace</h3>
-            <p class="piece-desc">From the heart of Tamil Nadu — gold, pearls, and rubies in the grand Thanjavur tradition.</p>
-            <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link" aria-label="View Thanjavur Heritage Necklace on Vinted">
-              View on Vinted
-              <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            </a>
-          </div>
-        </article>
-
+      <div class="category-grid">
+        <a class="category-tile" href="category.html?c=jewellery">
+          <picture>
+            <source type="image/webp" srcset="assets/images/collection/bangles-gold-600.webp 600w, assets/images/collection/bangles-gold-1000.webp 1000w" sizes="(max-width: 640px) 100vw, 33vw">
+            <img src="assets/images/collection/bangles-gold.jpg" alt="Gold-tone stacking bangles" loading="lazy" decoding="async">
+          </picture>
+          <span class="category-tile-body">
+            <span class="category-tile-count" data-category-count="jewellery">&nbsp;</span>
+            <span class="category-tile-name">Jewellery</span>
+            <span class="category-tile-cta">Explore <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </a>
+        <a class="category-tile" href="category.html?c=textiles">
+          <picture>
+            <source type="image/webp" srcset="assets/images/covers/textiles-600.webp 600w, assets/images/covers/textiles-1000.webp 1000w" sizes="(max-width: 640px) 100vw, 33vw">
+            <img src="assets/images/covers/textiles.jpg" alt="Block-print pattern" loading="lazy" decoding="async">
+          </picture>
+          <span class="category-tile-body">
+            <span class="category-tile-count" data-category-count="textiles">&nbsp;</span>
+            <span class="category-tile-name">Textiles</span>
+            <span class="category-tile-cta">Explore <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </a>
+        <a class="category-tile" href="category.html?c=lunchboxes">
+          <picture>
+            <source type="image/webp" srcset="assets/images/lunchboxes/neelam-1-600.webp 600w, assets/images/lunchboxes/neelam-1-1000.webp 1000w" sizes="(max-width: 640px) 100vw, 33vw">
+            <img src="assets/images/lunchboxes/neelam-1.jpg" alt="Two-tier steel tiffin lunchbox" loading="lazy" decoding="async">
+          </picture>
+          <span class="category-tile-body">
+            <span class="category-tile-count" data-category-count="lunchboxes">&nbsp;</span>
+            <span class="category-tile-name">Lunchboxes</span>
+            <span class="category-tile-cta">Explore <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>
+          </span>
+        </a>
       </div>
 
-      <div class="collection-footer">
+      <div class="collection-footer" style="margin-top:3rem">
         <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="btn-outline">
           Browse the full shop on Vinted
           <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true">
@@ -956,7 +188,7 @@
         <div class="how-step">
           <div class="how-number" aria-hidden="true">01</div>
           <h3 class="how-title">Browse the collection</h3>
-          <p class="how-desc">Explore current pieces here or directly on Vinted. The collection changes regularly as new pieces arrive from India.</p>
+          <p class="how-desc">Explore the categories here or browse directly on Vinted. The collection changes regularly as new pieces arrive from India.</p>
           <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener" class="text-link">
             Visit Vinted shop
             <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -975,7 +207,7 @@
 
         <div class="how-step">
           <div class="how-number" aria-hidden="true">03</div>
-          <h3 class="how-title">Receive your jewelry</h3>
+          <h3 class="how-title">Receive your piece</h3>
           <p class="how-desc">Orders ship within the Netherlands. Each piece is carefully packaged and sent with care. EU shipping coming soon.</p>
           <p class="how-note">Shipping to NL · EU coming soon</p>
         </div>
@@ -988,7 +220,7 @@
       <div class="about-image-wrap">
         <picture>
           <source type="image/webp" srcset="assets/images/hero-dancer2-600.webp 600w, assets/images/hero-dancer2-1000.webp 1000w" sizes="(max-width: 768px) 100vw, 50vw">
-          <img src="assets/images/hero-dancer2.jpg" width="912" height="1400" alt="Indian dancer wearing traditional gold jewelry" loading="lazy" decoding="async">
+          <img src="assets/images/hero-dancer2.jpg" width="912" height="1400" alt="Indian dancer wearing traditional gold jewellery" loading="lazy" decoding="async">
         </picture>
       </div>
       <div class="about-content">
@@ -997,7 +229,7 @@
           <h2 class="section-heading" id="about-heading">About Roos</h2>
         </div>
         <p class="about-body">
-          I'm Roos — and I've always been drawn to things made by hand. There's something about a piece of jewelry that someone crafted with care, that carries the memory of a tradition passed down through generations, that feels completely different from anything mass-produced.
+          I'm Roos — and I've always been drawn to things made by hand. There's something about a piece of jewellery that someone crafted with care, that carries the memory of a tradition passed down through generations, that feels completely different from anything mass-produced.
         </p>
         <p class="about-body">
           My connection to India runs deep. I fell in love with the country's craft traditions — the intricate goldwork, the bold bangles, the necklaces that somehow feel ancient and alive at the same time. Gulab is my way of bringing those pieces here to the Netherlands, and sharing something I genuinely love.
@@ -1072,86 +304,11 @@
       <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener">Instagram</a>
       <a href="https://www.vinted.nl/member/27795555-roos123456" target="_blank" rel="noopener">Vinted</a>
     </div>
-    <div class="footer-meta">© <span id="year"></span> Gulab · Handcrafted Indian Jewelry · Nederland</div>
+    <div class="footer-meta">© <span id="year"></span> Gulab · Handpicked from India · Nederland</div>
   </footer>
 
-  <script>
-    (function () {
-      // Copyright year
-      document.getElementById('year').textContent = new Date().getFullYear();
-
-      // Navbar background on scroll
-      var nav = document.getElementById('nav');
-      var ticking = false;
-      function updateNav() {
-        nav.classList.toggle('scrolled', window.scrollY > 60);
-        ticking = false;
-      }
-      window.addEventListener('scroll', function () {
-        if (!ticking) { requestAnimationFrame(updateNav); ticking = true; }
-      }, { passive: true });
-      updateNav();
-
-      // Mobile menu
-      var toggle = document.getElementById('navToggle');
-      var menu = document.getElementById('navMobile');
-      var menuLinks = Array.prototype.slice.call(menu.querySelectorAll('a'));
-      var logo = nav.querySelector('.nav-logo');
-
-      function isOpen() { return menu.classList.contains('open'); }
-
-      function openMenu() {
-        menu.classList.add('open');
-        toggle.classList.add('open');
-        toggle.setAttribute('aria-expanded', 'true');
-        toggle.setAttribute('aria-label', 'Close menu');
-        document.body.style.overflow = 'hidden';
-        menuLinks[0].focus();
-      }
-
-      function closeMenu(returnFocus) {
-        if (!isOpen()) return;
-        menu.classList.remove('open');
-        toggle.classList.remove('open');
-        toggle.setAttribute('aria-expanded', 'false');
-        toggle.setAttribute('aria-label', 'Open menu');
-        document.body.style.overflow = '';
-        if (returnFocus) toggle.focus();
-      }
-
-      toggle.addEventListener('click', function () {
-        isOpen() ? closeMenu(true) : openMenu();
-      });
-
-      document.addEventListener('keydown', function (e) {
-        if (!isOpen()) return;
-        if (e.key === 'Escape') { closeMenu(true); return; }
-        if (e.key !== 'Tab') return;
-        // Keep focus inside logo + toggle + menu links while open
-        var focusables = [logo, toggle].concat(menuLinks);
-        var i = focusables.indexOf(document.activeElement);
-        if (e.shiftKey && i <= 0) { e.preventDefault(); focusables[focusables.length - 1].focus(); }
-        else if (!e.shiftKey && i === focusables.length - 1) { e.preventDefault(); focusables[0].focus(); }
-      });
-
-      window.addEventListener('resize', function () {
-        if (window.innerWidth > 768) closeMenu(false);
-      });
-
-      // Smooth scroll for in-page links (closes the menu first)
-      document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
-        anchor.addEventListener('click', function (e) {
-          var id = this.getAttribute('href');
-          var target = id.length > 1 && document.querySelector(id);
-          if (!target) return;
-          e.preventDefault();
-          closeMenu(false);
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          history.pushState(null, '', id);
-        });
-      });
-    })();
-  </script>
+  <script src="assets/js/site.js" defer></script>
+  <script src="assets/js/shop.js" defer></script>
 
 </body>
 </html>

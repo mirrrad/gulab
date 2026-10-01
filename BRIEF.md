@@ -107,3 +107,17 @@ Create a **brand presence / landing page** whose job is:
 ---
 
 *Created: April 2026*
+
+---
+
+## Shop structure (added Oct 2026)
+
+- Home page shows **category tiles** (Jewellery, Textiles, Lunchboxes) → each opens `category.html?c=<id>`.
+- All categories and listings live in **`assets/data/listings.json`**. Edit that file to add, sell or hide pieces — no HTML changes needed.
+  - `status`: `available` | `sold` (shows greyed with a Sold badge) | `hidden`
+  - `vinted`: the listing's own Vinted URL (falls back to the profile if empty)
+  - `images`: base paths; each needs `<base>-600.webp`, `<base>-1000.webp`, `<base>.jpg`
+- A category with no items shows a "On its way from India" state automatically.
+- Item detail opens in a gallery dialog; deep links work: `category.html?c=lunchboxes&item=neelam-tiffin-2-tier`.
+- Planned: swap the JSON for a published Google Sheet (CSV) so Roos can update from her phone. Only `loadData()` in `assets/js/shop.js` changes.
+- Jewellery items and the Textiles cover are **placeholders** until Roos's own photos/listings are in.
