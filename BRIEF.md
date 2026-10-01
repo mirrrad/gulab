@@ -8,7 +8,7 @@
 
 **Owner:** Roos (based in the Netherlands)
 **What:** A one-person curation business — handcrafted Indian jewelry (and potentially other items)
-**Where:** Netherlands for now; EU and beyond later
+**Where:** Based in the Netherlands; ships EU-wide (confirmed Oct 2026)
 **Brand name:** **Gulab** (گلاب / गुलाब) — Hindi for "rose", chosen because Roos means rose in Dutch. The name bridges her identity and the Indian origin of the pieces.
 
 ---
@@ -95,7 +95,7 @@ Create a **brand presence / landing page** whose job is:
 | Now | Static site → Vinted |
 | 3–6 months | Newsletter (Mailchimp / Buttondown) |
 | 6–12 months | Shopify Lite — replace Vinted links |
-| 1+ year | Dutch/English toggle, EU shipping, journal/blog |
+| 1+ year | Dutch/English toggle, journal/blog |
 
 ---
 
