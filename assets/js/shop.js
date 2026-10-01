@@ -18,7 +18,7 @@
       '</picture>';
   }
 
-  var euro = new Intl.NumberFormat('nl-NL', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  var euro = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
   function priceHtml(item) {
     if (item.price == null || item.price === '') return '';
     return '<p class="piece-price">' + esc(euro.format(item.price)) +

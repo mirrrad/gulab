@@ -76,7 +76,7 @@ Create a **brand presence / landing page** whose job is:
 | Body font | Inter | Clean, readable |
 
 **Feel:** Warm luxury. Not cold minimalism. Rich, intimate, handcrafted.
-**Tagline:** *"Handpicked from India. Worn in Nederland."*
+**Tagline:** *"Handpicked from India’s makers. Each with a story to tell."* (was "…Worn in Nederland." — changed Oct 2026: multi-category, EU-wide)
 
 ---
 
