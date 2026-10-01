@@ -1,34 +1,77 @@
 {
-  "_readme": "Single source of truth for categories and listings. Later this can be replaced by a published Google Sheet (CSV) with the same columns. status: available | sold | hidden. images are paths without size suffix/extension; the site loads <path>-600.webp, <path>-1000.webp and <path>.jpg.",
-  "vinted_profile": "https://www.vinted.nl/member/27795555-roos123456",
+  "_readme": "Single source of truth for categories, crafts and listings. status: available | sold | hidden. images: base paths; the site loads <base>-600.webp, <base>-1000.webp and <base>.jpg. Optional item fields (row hidden when missing): unit, stock_note, maker, origin, technique, craft, materials, size, care, featured, vinted. Items with placeholder:true keep unconfirmed values under _proposed; move a value up a level once Roos confirms it.",
+  "contact": {
+    "instagram": "https://www.instagram.com/lijkesnijer",
+    "vinted": "https://www.vinted.nl/member/27795555-roos123456",
+    "whatsapp": "",
+    "_whatsapp_note": "Left empty on purpose: the number was removed from public pages for privacy. Set to https://wa.me/<number> to show WhatsApp buttons."
+  },
+  "shipping_note": "Sent from the Netherlands with tracking through Vinted’s shipping options, anywhere in the EU. Returns are handled through Vinted’s buyer protection.",
   "categories": [
     {
       "id": "jewellery",
       "name": "Jewellery",
       "blurb": "Bangles, necklaces and earrings — handpicked from artisans and markets across India.",
-      "cover": "assets/images/collection/bangles-gold"
+      "cover": "assets/images/collection/bangles-gold",
+      "craft": "bangles",
+      "cover_alt": "Gold-tone stacking bangles"
     },
     {
       "id": "textiles",
       "name": "Textiles",
       "blurb": "Block prints, scarves and woven pieces. New textiles are on their way from India.",
-      "cover": "assets/images/covers/textiles"
+      "cover": "assets/images/covers/textiles",
+      "craft": "blockprint",
+      "cover_alt": "Block-print pattern"
     },
     {
       "id": "lunchboxes",
       "name": "Lunchboxes",
       "blurb": "Classic Indian stainless steel tiffins — built to last a lifetime, plastic-free.",
-      "cover": "assets/images/lunchboxes/neelam-1"
+      "cover": "assets/images/lunchboxes/neelam-1",
+      "craft": "steel",
+      "cover_alt": "Two-tier steel tiffin lunchbox"
     }
   ],
+  "crafts": {
+    "temple": {
+      "name": "Temple jewellery",
+      "region": "Tamil Nadu",
+      "text": "First made to adorn deities in South Indian temples, and now worn at weddings and festivals. Dense relief work with goddesses, peacocks and lotus motifs."
+    },
+    "blockprint": {
+      "name": "Block printing",
+      "region": "Rajasthan",
+      "text": "Patterns carved into wooden blocks and pressed onto cotton by hand, one colour at a time. Small shifts in the print are the mark of the hand."
+    },
+    "steel": {
+      "name": "Steel tiffins",
+      "region": "Across India",
+      "text": "The stacking lunch carrier that has gone to work, to school and onto trains for generations. Plain steel, no plastic, made to be used every day for decades."
+    },
+    "kundan": {
+      "name": "Kundan setting",
+      "region": "Rajasthan",
+      "text": "Stones set in layers of fine foil, a technique refined in the royal courts of Rajasthan. Made for celebration and often handed down."
+    },
+    "jhumka": {
+      "name": "Jhumka earrings",
+      "region": "North India",
+      "text": "Bell-shaped drops that move as you walk — one of the oldest earring forms in India, worn every day and at every festival."
+    },
+    "bangles": {
+      "name": "Bangles",
+      "region": "Across India",
+      "text": "Worn in stacks, given at weddings and births, and part of daily life across India. Each set is chosen to be worn together or on its own."
+    }
+  },
   "items": [
     {
       "id": "neelam-tiffin-2-tier",
       "category": "lunchboxes",
       "title": "Neelam Two-Tier Steel Tiffin",
       "price": 25,
-      "price_note": "each",
-      "description": "A classic Indian stainless steel tiffin by Neelam (since 1972). Two stacking compartments, a lid with a fold-down carry handle, and a clip that locks all three together. Plastic-free, dishwasher-friendly steel, sized for one good lunch. Several available.",
+      "description": "A classic Indian stainless steel tiffin by Neelam (since 1972). Two stacking compartments, a lid with a fold-down carry handle, and a clip that locks all three together. Sized for one good lunch.",
       "images": [
         "assets/images/lunchboxes/neelam-1",
         "assets/images/lunchboxes/neelam-2",
@@ -48,67 +91,17 @@
         "Tiffin next to a hand for size"
       ],
       "vinted": "",
-      "status": "available"
-    },
-    {
-      "id": "gold-stacking-bangles",
-      "category": "jewellery",
-      "title": "Gold Stacking Bangles",
-      "price": null,
-      "description": "Gold-tone stacking bangles. Stack them, layer them, wear one — they work every way.",
-      "images": ["assets/images/collection/bangles-gold"],
-      "image_alts": ["Gold stacking bangles"],
-      "vinted": "",
       "status": "available",
-      "placeholder": true
-    },
-    {
-      "id": "festive-bangle-set",
-      "category": "jewellery",
-      "title": "Festive Bangle Set",
-      "price": null,
-      "description": "A set of four gold-tone bangles — for festive occasions or everyday.",
-      "images": ["assets/images/collection/bangles-4"],
-      "image_alts": ["Set of four gold-tone bangles"],
-      "vinted": "",
-      "status": "available",
-      "placeholder": true
-    },
-    {
-      "id": "temple-bangle",
-      "category": "jewellery",
-      "title": "Temple-Style Bangle",
-      "price": null,
-      "description": "A wide statement bangle in the traditional temple style.",
-      "images": ["assets/images/collection/bangle-single"],
-      "image_alts": ["Wide temple-style bangle"],
-      "vinted": "",
-      "status": "available",
-      "placeholder": true
-    },
-    {
-      "id": "arya-necklace",
-      "category": "jewellery",
-      "title": "Arya Necklace",
-      "price": null,
-      "description": "An intricate statement necklace in the grand Indian tradition.",
-      "images": ["assets/images/collection/necklace-arya"],
-      "image_alts": ["Traditional Indian statement necklace"],
-      "vinted": "",
-      "status": "available",
-      "placeholder": true
-    },
-    {
-      "id": "pearl-earrings",
-      "category": "jewellery",
-      "title": "Pearl Drop Earrings",
-      "price": null,
-      "description": "Delicate northern Indian-style earrings with pearl drops.",
-      "images": ["assets/images/collection/earrings-gold"],
-      "image_alts": ["Earrings with pearl drops"],
-      "vinted": "",
-      "status": "available",
-      "placeholder": true
+      "unit": "each",
+      "stock_note": "Several available",
+      "maker": "Neelam, since 1972",
+      "origin": "India",
+      "technique": "Pressed and polished steel",
+      "craft": "steel",
+      "materials": "Food-grade stainless steel. No plastic parts, no coatings.",
+      "size": "Two tiers plus lid with carry handle. Holds one generous lunch.",
+      "care": "Dishwasher-friendly. Dry fully before closing the clip.",
+      "featured": true
     },
     {
       "id": "thanjavur-necklace",
@@ -116,11 +109,173 @@
       "title": "Thanjavur-Style Necklace",
       "price": null,
       "description": "A heritage-style necklace inspired by the Thanjavur tradition of Tamil Nadu.",
-      "images": ["assets/images/collection/necklace-thanjavur"],
-      "image_alts": ["Thanjavur-style necklace"],
+      "images": [
+        "assets/images/collection/necklace-thanjavur"
+      ],
+      "image_alts": [
+        "Thanjavur-style necklace"
+      ],
       "vinted": "",
       "status": "available",
-      "placeholder": true
+      "placeholder": true,
+      "craft": "temple",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": true,
+      "_proposed": {
+        "price": 72,
+        "unit": "",
+        "stock_note": "One available",
+        "maker": "Workshop in Tamil Nadu",
+        "origin": "Thanjavur, Tamil Nadu",
+        "technique": "Temple-style goldwork",
+        "materials": "Gold-plated brass with glass stones.",
+        "size": "Necklace length approx. 42 cm, with adjustable cord."
+      }
+    },
+    {
+      "id": "arya-necklace",
+      "category": "jewellery",
+      "title": "Arya Necklace",
+      "price": null,
+      "description": "An intricate statement necklace in the grand Indian tradition.",
+      "images": [
+        "assets/images/collection/necklace-arya"
+      ],
+      "image_alts": [
+        "Traditional Indian statement necklace"
+      ],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true,
+      "craft": "kundan",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": true,
+      "_proposed": {
+        "price": 68,
+        "unit": "",
+        "stock_note": "One available",
+        "maker": "Family workshop",
+        "origin": "Jaipur, Rajasthan",
+        "technique": "Kundan-style stone setting",
+        "materials": "Gold-tone alloy, glass stones, faux pearls.",
+        "size": "Necklace length approx. 40 cm, with adjustable cord."
+      }
+    },
+    {
+      "id": "pearl-earrings",
+      "category": "jewellery",
+      "title": "Pearl Drop Earrings",
+      "price": null,
+      "description": "Delicate northern Indian-style earrings with pearl drops.",
+      "images": [
+        "assets/images/collection/earrings-gold"
+      ],
+      "image_alts": [
+        "Earrings with pearl drops"
+      ],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true,
+      "craft": "jhumka",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": true,
+      "_proposed": {
+        "price": 34,
+        "unit": "pair",
+        "stock_note": "One available",
+        "maker": "Market maker",
+        "origin": "North India",
+        "technique": "Jhumka with pearl drops",
+        "materials": "Gold-tone brass, faux pearls. Hook fastening.",
+        "size": "Drop length approx. 5 cm."
+      }
+    },
+    {
+      "id": "temple-bangle",
+      "category": "jewellery",
+      "title": "Temple-Style Bangle",
+      "price": null,
+      "description": "A wide statement bangle in the traditional temple style.",
+      "images": [
+        "assets/images/collection/bangle-single"
+      ],
+      "image_alts": [
+        "Wide temple-style bangle"
+      ],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true,
+      "craft": "temple",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": false,
+      "_proposed": {
+        "price": 45,
+        "unit": "",
+        "stock_note": "One available",
+        "maker": "Workshop in Tamil Nadu",
+        "origin": "South India",
+        "technique": "Temple-style relief work",
+        "materials": "Gold-plated brass.",
+        "size": "Inner diameter approx. 6.2 cm (size 2.6)."
+      }
+    },
+    {
+      "id": "gold-stacking-bangles",
+      "category": "jewellery",
+      "title": "Gold Stacking Bangles",
+      "price": null,
+      "description": "Gold-tone stacking bangles. Stack them, layer them, wear one — they work every way.",
+      "images": [
+        "assets/images/collection/bangles-gold"
+      ],
+      "image_alts": [
+        "Gold stacking bangles"
+      ],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true,
+      "craft": "bangles",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": false,
+      "_proposed": {
+        "price": 32,
+        "unit": "set",
+        "stock_note": "One set available",
+        "maker": "Family workshop",
+        "origin": "Jaipur, Rajasthan",
+        "technique": "Hand-finished bangles",
+        "materials": "Gold-tone brass.",
+        "size": "Inner diameter approx. 6.2 cm (size 2.6)."
+      }
+    },
+    {
+      "id": "festive-bangle-set",
+      "category": "jewellery",
+      "title": "Festive Bangle Set",
+      "price": null,
+      "description": "A set of four gold-tone bangles — for festive occasions or everyday.",
+      "images": [
+        "assets/images/collection/bangles-4"
+      ],
+      "image_alts": [
+        "Set of four gold-tone bangles"
+      ],
+      "vinted": "",
+      "status": "available",
+      "placeholder": true,
+      "craft": "bangles",
+      "care": "Keep dry and away from perfume. Store separately and wipe with a soft, dry cloth after wearing.",
+      "featured": false,
+      "_proposed": {
+        "price": 28,
+        "unit": "set of 4",
+        "stock_note": "One set available",
+        "maker": "Family workshop",
+        "origin": "Jaipur, Rajasthan",
+        "technique": "Hand-finished bangles",
+        "materials": "Gold-tone brass.",
+        "size": "Inner diameter approx. 6.2 cm (size 2.6)."
+      }
     }
   ]
 }

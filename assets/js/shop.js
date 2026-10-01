@@ -1,8 +1,10 @@
-/* Shop data: category tiles (home) and listing pages (category.html).
-   All content comes from assets/data/listings.json. To move to a Google Sheet later,
-   replace loadData() with a CSV fetch that returns the same { categories, items } shape. */
+/* Gulāb shop: renders home tiles + "New in", category listings and the product view.
+   All content comes from assets/data/listings.json (single source of truth). */
 (function () {
+  'use strict';
+
   var DATA_URL = 'assets/data/listings.json';
+  var ARROW_S = '<svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 
   function esc(s) {
     return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) {
@@ -10,212 +12,313 @@
     });
   }
 
-  // Images are stored as <base>-600.webp, <base>-1000.webp and <base>.jpg
-  function picture(base, alt, sizes, eager) {
+  function pic(base, alt, sizes, eager) {
     return '<picture>' +
       '<source type="image/webp" srcset="' + esc(base) + '-600.webp 600w, ' + esc(base) + '-1000.webp 1000w" sizes="' + sizes + '">' +
       '<img src="' + esc(base) + '.jpg" alt="' + esc(alt) + '"' + (eager ? '' : ' loading="lazy"') + ' decoding="async">' +
       '</picture>';
   }
 
-  var euro = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
-  function priceHtml(item) {
-    if (item.price == null || item.price === '') return '';
-    return '<p class="piece-price">' + esc(euro.format(item.price)) +
-      (item.price_note ? '<small>' + esc(item.price_note) + '</small>' : '') + '</p>';
+  var euroFmt = new Intl.NumberFormat('en-IE', { style: 'currency', currency: 'EUR', minimumFractionDigits: 0, maximumFractionDigits: 2 });
+  function price(item) { return item.price == null || item.price === '' ? '' : euroFmt.format(item.price); }
+
+  function byId(list, id) { for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return null; }
+  function visible(data, catId) {
+    return data.items.filter(function (i) { return i.status !== 'hidden' && (!catId || i.category === catId); });
+  }
+  function forSale(data, catId) {
+    return visible(data, catId).filter(function (i) { return i.status !== 'sold'; });
+  }
+  function itemUrl(item) { return 'category.html?c=' + encodeURIComponent(item.category) + '&item=' + encodeURIComponent(item.id); }
+  function craftOf(data, key) { return (data.crafts || {})[key] || null; }
+
+  /* ---------- Shared: product card ---------- */
+  function card(data, item, opts) {
+    opts = opts || {};
+    var cat = byId(data.categories, item.category) || { name: '' };
+    var craft = craftOf(data, item.craft);
+    var origin = item.origin || cat.name;
+    var technique = item.technique || (craft ? craft.name : '');
+    var sold = item.status === 'sold';
+    var many = item.images.length > 1;
+    return '<a class="card' + (sold ? ' is-sold' : '') + '" href="' + itemUrl(item) + '" data-item="' + esc(item.id) + '">' +
+      '<div class="well well--4x5">' +
+        pic(item.images[0], (item.image_alts || [])[0] || item.title, '(max-width: 560px) 100vw, (max-width: 1100px) 33vw, 25vw') +
+        (many && !opts.noChip ? '<span class="chip chip--bl">' + item.images.length + ' photos</span>' : '') +
+        (sold ? '<span class="badge-sold">Sold</span>' : '') +
+      '</div>' +
+      '<div class="card-body">' +
+        '<span class="mono">' + esc(origin) + '</span>' +
+        '<div class="card-row"><span class="card-title">' + esc(item.title) + '</span>' +
+          (price(item) ? '<span class="card-price">' + price(item) + '</span>' : '') + '</div>' +
+        (technique && !opts.noTech ? '<span class="card-tech">' + esc(technique) + '</span>' : '') +
+      '</div>' +
+    '</a>';
   }
 
-  function visible(items, catId) {
-    return items.filter(function (i) { return i.category === catId && i.status !== 'hidden'; });
+  function countLabel(n) { return n > 1 ? n + ' pieces' : n === 1 ? 'Available now' : 'Coming soon'; }
+
+  function applyContact(data) {
+    var wa = data.contact && data.contact.whatsapp;
+    if (!wa) return;
+    document.querySelectorAll('[data-whatsapp]').forEach(function (a) { a.href = wa; a.hidden = false; });
   }
 
-  function loadData() {
-    return fetch(DATA_URL, { cache: 'no-cache' }).then(function (r) {
-      if (!r.ok) throw new Error('HTTP ' + r.status);
-      return r.json();
-    });
-  }
-
-  /* ---------- Home: fill category tile counts ---------- */
+  /* ---------- Home ---------- */
   function renderHome(data) {
-    document.querySelectorAll('[data-category-count]').forEach(function (el) {
-      var id = el.getAttribute('data-category-count');
-      var n = visible(data.items, id).filter(function (i) { return i.status !== 'sold'; }).length;
-      el.textContent = n > 1 ? n + ' pieces' : n === 1 ? 'Available now' : 'Coming soon';
-    });
+    var tiles = document.getElementById('categoryTiles');
+    tiles.innerHTML = data.categories.map(function (c, i) {
+      var n = forSale(data, c.id).length;
+      return '<a class="tile" href="category.html?c=' + encodeURIComponent(c.id) + '">' +
+        '<div class="well well--4x5">' + pic(c.cover, c.cover_alt || c.name, '(max-width: 760px) 100vw, 33vw') + '</div>' +
+        '<div class="tile-row">' +
+          '<span class="tile-num">' + String(i + 1).padStart(2, '0') + '</span>' +
+          '<span class="tile-name">' + esc(c.name) + '</span>' +
+          '<span class="mono">' + countLabel(n) + '</span>' +
+        '</div>' +
+        '<span class="tile-blurb">' + esc(c.blurb) + '</span>' +
+      '</a>';
+    }).join('');
+
+    var featured = forSale(data).filter(function (i) { return i.featured; }).slice(0, 4);
+    if (featured.length < 4) {
+      featured = featured.concat(forSale(data).filter(function (i) { return featured.indexOf(i) < 0; })).slice(0, 4);
+    }
+    var newIn = document.getElementById('newIn');
+    if (featured.length) {
+      newIn.innerHTML = featured.map(function (i) { return card(data, i, { noChip: true }); }).join('');
+      var firstWithItems = data.categories.filter(function (c) { return forSale(data, c.id).length; })[0];
+      if (firstWithItems) document.getElementById('viewAll').href = 'category.html?c=' + firstWithItems.id;
+    } else {
+      document.getElementById('newInSection').hidden = true;
+    }
   }
 
   /* ---------- Category page ---------- */
-  var state = { items: [], profile: '' };
+  var app, DATA, gallery = { item: null, i: 0 };
 
-  function renderCategory(data) {
-    var params = new URLSearchParams(location.search);
-    var catId = params.get('c') || data.categories[0].id;
-    var cat = data.categories.filter(function (c) { return c.id === catId; })[0] || data.categories[0];
-    state.profile = data.vinted_profile;
+  function setNavCurrent(catId) {
+    document.querySelectorAll('.nav-links a').forEach(function (a) {
+      if (a.getAttribute('href') === 'category.html?c=' + catId) a.setAttribute('aria-current', 'page');
+      else a.removeAttribute('aria-current');
+    });
+  }
 
-    document.title = cat.name + ' — Gulab';
-    document.getElementById('catName').textContent = cat.name;
-    document.getElementById('catCrumb').textContent = cat.name;
-    document.getElementById('catBlurb').textContent = cat.blurb;
+  function renderCategory(cat) {
+    var data = DATA;
+    var items = visible(data, cat.id).sort(function (a, b) { return (a.status === 'sold') - (b.status === 'sold'); });
+    document.title = cat.name + ' — Gulāb';
+    setNavCurrent(cat.id);
 
-    document.getElementById('catTabs').innerHTML = data.categories.map(function (c) {
-      return '<a href="category.html?c=' + encodeURIComponent(c.id) + '"' +
-        (c.id === cat.id ? ' aria-current="page"' : '') + '>' + esc(c.name) + '</a>';
+    var tabs = data.categories.map(function (c) {
+      var k = forSale(data, c.id).length;
+      return '<a class="tab" href="category.html?c=' + encodeURIComponent(c.id) + '"' + (c.id === cat.id ? ' aria-current="page"' : '') + '>' +
+        esc(c.name) + '<span class="tab-count">' + (k ? k : 'soon') + '</span></a>';
     }).join('');
 
-    var items = visible(data.items, cat.id).sort(function (a, b) {
-      return (a.status === 'sold') - (b.status === 'sold');
-    });
-    state.items = items;
-    var grid = document.getElementById('listing');
-
-    if (!items.length) {
-      grid.outerHTML =
-        '<div class="empty-state">' +
+    var body;
+    if (items.length) {
+      body = '<section class="container cat-list" aria-label="' + esc(cat.name) + '">' +
+        '<div class="toolbar"><span class="count">' + (items.length === 1 ? '1 piece' : items.length + ' pieces') + '</span>' +
+        '<span>Shipping costs shown at checkout on Vinted</span></div>' +
+        '<div class="grid-cards grid-cards--wide">' + items.map(function (i) { return card(data, i); }).join('') + '</div>' +
+      '</section>';
+    } else {
+      var craft = craftOf(data, cat.craft);
+      body = '<section class="container empty"><div class="empty-box">' +
+        '<div class="blockprint-field" aria-hidden="true"></div>' +
+        '<div class="empty-text">' +
+          (craft ? '<span class="eyebrow eyebrow--gold">' + esc(craft.name) + ' · ' + esc(craft.region) + '</span>' : '') +
           '<h2>On its way from India</h2>' +
           '<p>New ' + esc(cat.name.toLowerCase()) + ' are being picked right now. Follow along on Instagram to see them first.</p>' +
-          '<a class="btn-outline" href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener">Follow on Instagram</a>' +
-        '</div>';
-      return;
+          '<a class="btn btn--cream" href="' + esc(data.contact.instagram) + '" target="_blank" rel="noopener">Follow on Instagram ↗</a>' +
+        '</div></div></section>';
     }
 
-    grid.innerHTML = items.map(function (item, idx) {
-      var sold = item.status === 'sold';
-      var photos = item.images.length > 1 ? '<span class="piece-photos">' + item.images.length + ' photos</span>' : '';
-      return '<article class="piece-card' + (sold ? ' is-sold' : '') + '">' +
-        '<div class="piece-image">' +
-          picture(item.images[0], (item.image_alts || [])[0] || item.title, '(max-width: 640px) 100vw, 400px', idx < 3) +
-          photos + (sold ? '<span class="badge-sold">Sold</span>' : '') +
-        '</div>' +
-        '<div class="piece-info">' +
-          '<span class="piece-label">' + esc(cat.name) + '</span>' +
-          '<h3 class="piece-name">' + esc(item.title) + '</h3>' +
-          priceHtml(item) +
-          '<p class="piece-desc">' + esc(item.description) + '</p>' +
-          '<button type="button" class="text-link" data-open="' + idx + '" aria-haspopup="dialog">' +
-            'View details <svg width="11" height="8" viewBox="0 0 11 8" fill="none" aria-hidden="true"><path d="M1 4h9M6 1l4 3-4 3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>' +
-          '</button>' +
-        '</div>' +
-      '</article>';
-    }).join('');
-
-    grid.addEventListener('click', function (e) {
-      var btn = e.target.closest('[data-open]');
-      if (btn) openItem(Number(btn.getAttribute('data-open')));
-    });
-
-    // Deep link: category.html?c=lunchboxes&item=neelam-tiffin-2-tier
-    var deep = params.get('item');
-    if (deep) {
-      var i = items.map(function (x) { return x.id; }).indexOf(deep);
-      if (i > -1) openItem(i);
-    }
+    app.innerHTML =
+      '<section class="container cat-head">' +
+        '<nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span><span aria-current="page">' + esc(cat.name) + '</span></nav>' +
+        '<div class="cat-title"><h1>' + esc(cat.name) + '</h1><p class="lead">' + esc(cat.blurb) + '</p></div>' +
+        '<nav class="tabs" aria-label="Categories">' + tabs + '</nav>' +
+      '</section>' + body;
   }
 
-  /* ---------- Item dialog with gallery ---------- */
-  var dialog, current = { item: null, photo: 0 };
+  /* ---------- Product view ---------- */
+  function renderProduct(item) {
+    var data = DATA;
+    var cat = byId(data.categories, item.category) || data.categories[0];
+    var craft = craftOf(data, item.craft) || craftOf(data, cat.craft);
+    var many = item.images.length > 1;
+    var sold = item.status === 'sold';
+    var link = item.vinted || data.contact.vinted;
+    document.title = item.title + ' — Gulāb';
+    setNavCurrent(cat.id);
+    gallery = { item: item, i: 0 };
+
+    var prov = [['Maker', item.maker], ['Origin', item.origin], ['Technique', item.technique]].filter(function (r) { return r[1]; });
+    var acc = [['Materials', item.materials], ['Size', item.size], ['Care', item.care], ['Shipping & returns', data.shipping_note]].filter(function (r) { return r[1]; });
+    var stock = sold ? 'Sold' : item.stock_note;
+
+    var wa = data.contact.whatsapp;
+    var ask = wa
+      ? '<a class="btn btn--secondary btn--block" href="' + esc(wa) + '" target="_blank" rel="noopener">Ask Roos or reserve on WhatsApp</a>'
+      : '<a class="btn btn--secondary btn--block" href="' + esc(data.contact.instagram) + '" target="_blank" rel="noopener">Ask Roos or reserve on Instagram</a>';
+
+    var related = visible(data, item.category).filter(function (x) { return x.id !== item.id && x.status !== 'sold'; });
+    var relatedTitle = 'More ' + cat.name.toLowerCase();
+    if (!related.length) { related = forSale(data).filter(function (x) { return x.id !== item.id; }); relatedTitle = 'You may also like'; }
+    related = related.slice(0, 4);
+
+    app.innerHTML =
+      '<section class="container product">' +
+        '<nav class="crumbs" aria-label="Breadcrumb"><a href="index.html">Home</a><span aria-hidden="true">/</span>' +
+          '<a href="category.html?c=' + encodeURIComponent(cat.id) + '">' + esc(cat.name) + '</a><span aria-hidden="true">/</span>' +
+          '<span aria-current="page">' + esc(item.title) + '</span></nav>' +
+        '<div class="product-grid">' +
+          '<div class="gallery" aria-roledescription="carousel" aria-label="Photos of ' + esc(item.title) + '">' +
+            '<div class="well well--4x5 gallery-main" id="galleryMain"></div>' +
+            (many ? '<div class="thumbs" role="group" aria-label="Choose photo">' + item.images.map(function (b, i) {
+              return '<button type="button" class="thumb" data-photo="' + i + '" aria-label="Photo ' + (i + 1) + '"><img src="' + esc(b) + '-600.webp" alt="" loading="lazy"></button>';
+            }).join('') + '</div>' : '') +
+          '</div>' +
+          '<div class="details">' +
+            '<div class="details-head">' +
+              '<span class="eyebrow eyebrow--saffron">' + esc(cat.name) + '</span>' +
+              '<h1>' + esc(item.title) + '</h1>' +
+              (price(item) ? '<div class="price-line"><span class="price-main">' + price(item) + '</span>' + (item.unit ? '<span class="price-unit">' + esc(item.unit) + '</span>' : '') + '</div>' : '') +
+              (stock ? '<span class="stock' + (sold ? ' stock--sold' : '') + '">' + esc(stock) + '</span>' : '') +
+            '</div>' +
+            '<p class="desc">' + esc(item.description) + '</p>' +
+            (prov.length ? '<div><div class="band-light" aria-hidden="true"></div><dl class="prov">' + prov.map(function (r) {
+              return '<dt>' + r[0] + '</dt><dd>' + esc(r[1]) + '</dd>';
+            }).join('') + '</dl></div>' : '') +
+            '<div class="ctas">' +
+              (sold ? '' : '<a class="btn btn--primary btn--block" href="' + esc(link) + '" target="_blank" rel="noopener">' + (item.vinted ? 'Buy on Vinted' : 'Shop on Vinted') + ' ↗</a>') +
+              ask +
+              '<span class="cta-note">Payment and buyer protection through Vinted · Ships across the EU</span>' +
+            '</div>' +
+            (acc.length ? '<div class="accordion">' + acc.map(function (r, i) {
+              var id = 'acc-' + i;
+              return '<div class="acc-item"><button type="button" class="acc-btn" aria-expanded="' + (i === 0) + '" aria-controls="' + id + '">' + esc(r[0]) +
+                '<span class="acc-sign" aria-hidden="true">' + (i === 0 ? '−' : '+') + '</span></button>' +
+                '<p class="acc-panel" id="' + id + '"' + (i === 0 ? '' : ' hidden') + '>' + esc(r[1]) + '</p></div>';
+            }).join('') + '</div>' : '') +
+          '</div>' +
+        '</div>' +
+      '</section>' +
+      (craft ? '<section class="dark">' +
+        '<div class="band-dark" aria-hidden="true"></div>' +
+        '<div class="container craft-band-grid"><div><span class="eyebrow eyebrow--gold">About the craft · ' + esc(craft.region) + '</span>' +
+        '<h2>' + esc(craft.name) + '</h2></div><p>' + esc(craft.text) + '</p></div>' +
+        '<div class="band-dark" aria-hidden="true"></div></section>' : '') +
+      (related.length ? '<section class="container related"><h2>' + esc(relatedTitle) + '</h2><div class="grid-cards">' +
+        related.map(function (x) { return card(data, x, { noTech: true, noChip: true }); }).join('') + '</div></section>' : '');
+
+    showPhoto(0);
+  }
 
   function showPhoto(n) {
-    var item = current.item;
+    var item = gallery.item;
+    if (!item) return;
     var count = item.images.length;
-    current.photo = (n + count) % count;
-    var alt = (item.image_alts || [])[current.photo] || item.title;
-    dialog.querySelector('.gallery-main').innerHTML = picture(item.images[current.photo], alt, '(max-width: 760px) 100vw, 600px', true);
-    dialog.querySelectorAll('.gallery-thumbs button').forEach(function (b, i) {
-      b.setAttribute('aria-current', i === current.photo ? 'true' : 'false');
+    gallery.i = ((n % count) + count) % count;
+    var alt = (item.image_alts || [])[gallery.i] || item.title;
+    var main = document.getElementById('galleryMain');
+    main.innerHTML = pic(item.images[gallery.i], alt, '(max-width: 860px) 100vw, 50vw', true) +
+      (count > 1 ?
+        '<button type="button" class="gallery-btn gallery-prev" aria-label="Previous photo">‹</button>' +
+        '<button type="button" class="gallery-btn gallery-next" aria-label="Next photo">›</button>' +
+        '<span class="chip chip--br" aria-live="polite">' + (gallery.i + 1) + ' / ' + count + '</span>' : '');
+    document.querySelectorAll('.thumb').forEach(function (t, i) {
+      t.setAttribute('aria-current', i === gallery.i ? 'true' : 'false');
     });
   }
 
-  function openItem(idx) {
-    var item = state.items[idx];
-    current.item = item;
-    var many = item.images.length > 1;
-    var link = item.vinted || state.profile;
-    var sold = item.status === 'sold';
-
-    dialog.innerHTML =
-      '<button type="button" class="dialog-close" aria-label="Close">&times;</button>' +
-      '<div class="item-dialog-inner">' +
-        '<div class="gallery">' +
-          '<div class="gallery-main"></div>' +
-          (many ?
-            '<button type="button" class="gallery-nav gallery-prev" aria-label="Previous photo">&#8249;</button>' +
-            '<button type="button" class="gallery-nav gallery-next" aria-label="Next photo">&#8250;</button>' +
-            '<div class="gallery-thumbs">' + item.images.map(function (b, i) {
-              return '<button type="button" aria-label="Photo ' + (i + 1) + '" data-photo="' + i + '">' +
-                '<img src="' + esc(b) + '-600.webp" alt="" loading="lazy"></button>';
-            }).join('') + '</div>'
-          : '') +
-        '</div>' +
-        '<div class="item-details">' +
-          '<h2 id="itemTitle">' + esc(item.title) + '</h2>' +
-          priceHtml(item) +
-          '<p>' + esc(item.description) + '</p>' +
-          (sold
-            ? '<p class="item-help">This piece has found a home. Follow on Instagram to see new arrivals first.</p>'
-            : '<a class="btn-primary" href="' + esc(link) + '" target="_blank" rel="noopener">' +
-                (item.vinted ? 'Buy on Vinted' : 'Shop on Vinted') +
-                ' <svg width="14" height="10" viewBox="0 0 14 10" fill="none" aria-hidden="true"><path d="M1 5h12M8 1l5 4-5 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></a>' +
-              '<p class="item-help">Questions, or want it reserved? Message Roos on Vinted or <a href="https://www.instagram.com/lijkesnijer" target="_blank" rel="noopener" style="text-decoration:underline">Instagram</a>.</p>') +
-        '</div>' +
-      '</div>';
-    dialog.setAttribute('aria-labelledby', 'itemTitle');
-    showPhoto(0);
-    document.body.style.overflow = 'hidden';
-    dialog.showModal();
-    dialog.querySelector('.dialog-close').focus();
-
-    var url = new URL(location.href);
-    url.searchParams.set('item', item.id);
-    history.replaceState(null, '', url);
+  /* ---------- Router (category.html) ---------- */
+  function route(scroll) {
+    var p = new URLSearchParams(location.search);
+    var cat = byId(DATA.categories, p.get('c')) || DATA.categories[0];
+    var item = p.get('item') && byId(DATA.items, p.get('item'));
+    gallery = { item: null, i: 0 };
+    if (item && item.status !== 'hidden') renderProduct(item); else renderCategory(cat);
+    if (scroll) window.scrollTo(0, 0);
   }
 
-  function setupDialog() {
-    dialog = document.getElementById('itemDialog');
-    if (!dialog) return;
-    dialog.addEventListener('click', function (e) {
-      if (e.target === dialog || e.target.closest('.dialog-close')) { dialog.close(); return; }
-      if (e.target.closest('.gallery-prev')) showPhoto(current.photo - 1);
-      if (e.target.closest('.gallery-next')) showPhoto(current.photo + 1);
-      var t = e.target.closest('[data-photo]');
+  function bindCategoryPage() {
+    // In-page navigation for cards, tabs and breadcrumbs (Back button keeps working)
+    document.addEventListener('click', function (e) {
+      if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+      var a = e.target.closest('a[href^="category.html"]');
+      if (a && !a.target) {
+        e.preventDefault();
+        if (a.getAttribute('href') !== location.pathname.split('/').pop() + location.search) {
+          history.pushState(null, '', a.getAttribute('href'));
+        }
+        route(true);
+        return;
+      }
+      if (e.target.closest('.gallery-prev')) showPhoto(gallery.i - 1);
+      else if (e.target.closest('.gallery-next')) showPhoto(gallery.i + 1);
+      var t = e.target.closest('.thumb');
       if (t) showPhoto(Number(t.getAttribute('data-photo')));
+      var acc = e.target.closest('.acc-btn');
+      if (acc) {
+        var open = acc.getAttribute('aria-expanded') === 'true';
+        document.querySelectorAll('.acc-btn').forEach(function (b) {
+          b.setAttribute('aria-expanded', 'false');
+          b.querySelector('.acc-sign').textContent = '+';
+          document.getElementById(b.getAttribute('aria-controls')).hidden = true;
+        });
+        if (!open) {
+          acc.setAttribute('aria-expanded', 'true');
+          acc.querySelector('.acc-sign').textContent = '−';
+          document.getElementById(acc.getAttribute('aria-controls')).hidden = false;
+        }
+      }
     });
-    dialog.addEventListener('keydown', function (e) {
-      if (!current.item || current.item.images.length < 2) return;
-      if (e.key === 'ArrowLeft') showPhoto(current.photo - 1);
-      if (e.key === 'ArrowRight') showPhoto(current.photo + 1);
+    window.addEventListener('popstate', function () { route(true); });
+    document.addEventListener('keydown', function (e) {
+      if (!gallery.item || gallery.item.images.length < 2) return;
+      var tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (/INPUT|TEXTAREA|SELECT/.test(tag)) return;
+      if (e.key === 'ArrowLeft') showPhoto(gallery.i - 1);
+      if (e.key === 'ArrowRight') showPhoto(gallery.i + 1);
     });
-    // Swipe on touch screens
     var startX = null;
-    dialog.addEventListener('touchstart', function (e) {
-      if (e.target.closest('.gallery-main')) startX = e.touches[0].clientX;
+    document.addEventListener('touchstart', function (e) {
+      startX = e.target.closest('#galleryMain') ? e.touches[0].clientX : null;
     }, { passive: true });
-    dialog.addEventListener('touchend', function (e) {
+    document.addEventListener('touchend', function (e) {
       if (startX == null) return;
       var dx = e.changedTouches[0].clientX - startX;
-      if (Math.abs(dx) > 40) showPhoto(current.photo + (dx < 0 ? 1 : -1));
+      if (Math.abs(dx) > 40) showPhoto(gallery.i + (dx < 0 ? 1 : -1));
       startX = null;
-    });
-    dialog.addEventListener('close', function () {
-      document.body.style.overflow = '';
-      var url = new URL(location.href);
-      url.searchParams.delete('item');
-      history.replaceState(null, '', url);
     });
   }
 
   /* ---------- Boot ---------- */
-  var isCategoryPage = !!document.getElementById('listing');
-  setupDialog();
-  loadData().then(function (data) {
-    if (isCategoryPage) renderCategory(data); else renderHome(data);
-  }).catch(function () {
-    if (isCategoryPage) {
-      document.getElementById('listing').outerHTML =
-        '<p class="load-error">Couldn’t load the pieces right now. You can browse everything on <a href="https://www.vinted.nl/member/27795555-roos123456" style="text-decoration:underline">Vinted</a>.</p>';
-    } else {
-      document.querySelectorAll('[data-category-count]').forEach(function (el) { el.textContent = ''; });
-    }
-  });
+  app = document.getElementById('app');
+  var isCategoryPage = !!app;
+
+  fetch(DATA_URL, { cache: 'no-cache' })
+    .then(function (r) { if (!r.ok) throw new Error('HTTP ' + r.status); return r.json(); })
+    .then(function (data) {
+      DATA = data;
+      applyContact(data);
+      if (isCategoryPage) {
+        app.classList.remove('container', 'cat-head');
+        route(false);
+        bindCategoryPage();
+      } else {
+        renderHome(data);
+      }
+    })
+    .catch(function () {
+      if (isCategoryPage) {
+        app.innerHTML = '<p class="container load-error">Couldn’t load the pieces right now. You can browse everything on <a href="https://www.vinted.nl/member/27795555-roos123456">Vinted</a>.</p>';
+      } else {
+        var s = document.getElementById('newInSection');
+        if (s) s.hidden = true;
+      }
+    });
 })();

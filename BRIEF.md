@@ -110,14 +110,15 @@ Create a **brand presence / landing page** whose job is:
 
 ---
 
-## Shop structure (added Oct 2026)
+## Shop structure (redesign, Oct 2026)
 
-- Home page shows **category tiles** (Jewellery, Textiles, Lunchboxes) → each opens `category.html?c=<id>`.
-- All categories and listings live in **`assets/data/listings.json`**. Edit that file to add, sell or hide pieces — no HTML changes needed.
-  - `status`: `available` | `sold` (shows greyed with a Sold badge) | `hidden`
-  - `vinted`: the listing's own Vinted URL (falls back to the profile if empty)
-  - `images`: base paths; each needs `<base>-600.webp`, `<base>-1000.webp`, `<base>.jpg`
-- A category with no items shows a "On its way from India" state automatically.
-- Item detail opens in a gallery dialog; deep links work: `category.html?c=lunchboxes&item=neelam-tiffin-2-tier`.
-- Planned: swap the JSON for a published Google Sheet (CSV) so Roos can update from her phone. Only `loadData()` in `assets/js/shop.js` changes.
-- Jewellery items and the Textiles cover are **placeholders** until Roos's own photos/listings are in.
+Built from `design_handoff_gulab_redesign` (README.md + SCREENS.md + prototype). Light "paper" design, Cormorant Garamond / Instrument Sans / IBM Plex Mono / Tiro Devanagari, square corners, CSS-only bands and jaali pattern.
+
+- **Home** (`index.html`): split hero → category tiles → New in (`featured: true` items) → The craft (dark) → How buying works → About Roos (portrait placeholder) → footer.
+- **Category + product** (`category.html`): `?c=<id>` shows the listing; `?c=<id>&item=<id>` shows the full product view (gallery, provenance, CTAs, accordion, craft band, related). Navigation inside the page uses pushState, so Back works.
+- **Data** (`assets/data/listings.json`) is the single source of truth:
+  - Item fields: `price`, `unit`, `stock_note`, `maker`, `origin`, `technique`, `craft`, `materials`, `size`, `care`, `featured`, `vinted`, `status` (`available` | `sold` | `hidden`). Any missing field simply hides its row.
+  - `crafts` map (name, region, text) feeds the craft band and the empty-state eyebrow.
+  - `contact.whatsapp` is **empty on purpose** (number removed for privacy). Set it to `https://wa.me/<number>` to show WhatsApp in the footer and on product pages; otherwise the "ask/reserve" button goes to Instagram.
+  - Jewellery items are **placeholders**: the prototype's prices, makers, origins, materials and sizes are stored under each item's `_proposed` and are *not shown* until Roos confirms them and they're moved up a level.
+- To add a piece: add images as `<base>-600.webp`, `<base>-1000.webp`, `<base>.jpg`, then add an item to the JSON.
